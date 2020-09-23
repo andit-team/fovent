@@ -1,0 +1,13 @@
+{
+  "name": "larapen/laravel-text-to-image",
+  "description": "Convert your formatted texts in any very pretty pictures.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Laravel",
+      "email": "sarkar.sagar@gmail.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {}
+}

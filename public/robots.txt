@@ -1,0 +1,47 @@
+User-agent: *
+Disallow:
+
+Allow: /
+
+User-agent: *
+Disallow: /admin/
+Disallow: /ajax/
+Disallow: /assets/
+Disallow: /css/
+Disallow: /js/
+Disallow: /vendor/
+Disallow: /main.php
+Disallow: /mix-manifest.json
+
+
+Sitemap: https://fovent.org/en/ar/sitemaps.xml
+Sitemap: https://fovent.org/de/be/sitemaps.xml
+Sitemap: https://fovent.org/en/br/sitemaps.xml
+Sitemap: https://fovent.org/en/cl/sitemaps.xml
+Sitemap: https://fovent.org/en/cr/sitemaps.xml
+Sitemap: https://fovent.org/de/de/sitemaps.xml
+Sitemap: https://fovent.org/en/dm/sitemaps.xml
+Sitemap: https://fovent.org/en/dk/sitemaps.xml
+Sitemap: https://fovent.org/en/fr/sitemaps.xml
+Sitemap: https://fovent.org/en/gl/sitemaps.xml
+Sitemap: https://fovent.org/en/in/sitemaps.xml
+Sitemap: https://fovent.org/en/ir/sitemaps.xml
+Sitemap: https://fovent.org/en/it/sitemaps.xml
+Sitemap: https://fovent.org/en/ca/sitemaps.xml
+Sitemap: https://fovent.org/en/hr/sitemaps.xml
+Sitemap: https://fovent.org/en/mt/sitemaps.xml
+Sitemap: https://fovent.org/en/mx/sitemaps.xml
+Sitemap: https://fovent.org/en/nz/sitemaps.xml
+Sitemap: https://fovent.org/en/nl/sitemaps.xml
+Sitemap: https://fovent.org/en/pk/sitemaps.xml
+Sitemap: https://fovent.org/en/ph/sitemaps.xml
+Sitemap: https://fovent.org/en/pt/sitemaps.xml
+Sitemap: https://fovent.org/en/pr/sitemaps.xml
+Sitemap: https://fovent.org/en/se/sitemaps.xml
+Sitemap: https://fovent.org/de/ch/sitemaps.xml
+Sitemap: https://fovent.org/en/zw/sitemaps.xml
+Sitemap: https://fovent.org/en/hk/sitemaps.xml
+Sitemap: https://fovent.org/en/es/sitemaps.xml
+Sitemap: https://fovent.org/en/th/sitemaps.xml
+Sitemap: https://fovent.org/en/cz/sitemaps.xml
+Sitemap: https://fovent.org/de/at/sitemaps.xml
