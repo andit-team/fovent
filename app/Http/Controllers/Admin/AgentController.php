@@ -10,6 +10,7 @@ use Larapen\Admin\app\Http\Controllers\PanelController;
 use App\Http\Requests\Admin\Request as StoreRequest;
 use App\Http\Requests\Admin\Request as UpdateRequest;
 use App\Models\Gender;
+use App\Models\Agent;
 
 class AgentController extends PanelController {
     
@@ -44,6 +45,10 @@ class AgentController extends PanelController {
         $this->xPanel->addColumn([
             'name'  => 'name',
             'label' => trans('admin.name'),
+        ]);
+        $this->xPanel->addColumn([
+            'name'  => 'email',
+            'label' => trans('admin.email'),
         ]);
 
 
@@ -133,7 +138,7 @@ class AgentController extends PanelController {
             'name'              => 'voucher_code',
             // 'entity'            => 'country',
             'type'              => 'text',
-            'value'             => 'fds',
+            'value'             => $this->voucherCode(),
             'wrapperAttributes' => [
                 'class' => 'form-group col-md-6',
             ],
@@ -147,7 +152,7 @@ class AgentController extends PanelController {
             'attributes' => [
                 'placeholder' => 'Commission Percentage',
             ],
-            'prefix' => '<span class="input-group-text"><i class="ti-email"></i></span>',
+            'prefix' => '<span class="input-group-text">%</span>',
             'wrapperAttributes' => [
                 'class' => 'form-group col-md-6',
             ]
@@ -158,9 +163,20 @@ class AgentController extends PanelController {
 
         $this->xPanel->addField([
             'label'             => 'Payment Method',
-            'name'              => 'gender_ids',
+            'name'              => 'payment_method',
             'type'              => 'select2_from_array',
             'options'           => ['stripe','paypal'],
+            'allows_null'       => false,
+            'wrapperAttributes' => [
+                'class' => 'form-group col-md-6',
+            ],
+        ]);
+
+        $this->xPanel->addField([
+            'label'             => 'Commission Validity',
+            'name'              => 'commission_validity',
+            'type'              => 'select2_from_array',
+            'options'           => ['1 year','2 year','6 month','3 year'],
             'allows_null'       => false,
             'wrapperAttributes' => [
                 'class' => 'form-group col-md-6',
@@ -216,8 +232,8 @@ class AgentController extends PanelController {
 
     public function store(StoreRequest $request)
     {
-        echo 'asdf';
         dd($request->all());
+
         // return parent::storeCrud();
     }
 
@@ -231,5 +247,11 @@ class AgentController extends PanelController {
 		$entries = Gender::trans()->get();
 		
 		return $this->getTranslatedArray($entries);
-	}
+    }
+    
+    private function voucherCode(){
+        $lastagent = Agent::orderBy('id','DESC')->limit(1)->first();
+        return 'agent-'.sprintf('%04d',$lastagent->id+1);
+        
+    }
 }

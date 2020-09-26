@@ -54,7 +54,7 @@
 						</a>
 						<ul aria-expanded="false" class="collapse first-level">
 								<li class="sidebar-item">
-									<a href="{{ admin_url('posts') }}" class="sidebar-link">
+									<a href="{{ admin_url('agent') }}" class="sidebar-link">
 										<i class="mdi mdi-adjust"></i>
 										<span class="hide-menu">{{ trans('admin.list') }}</span>
 									</a>
