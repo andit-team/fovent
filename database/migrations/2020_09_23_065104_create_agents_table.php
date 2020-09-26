@@ -24,7 +24,7 @@ class CreateAgentsTable extends Migration
             $table->string('commission_validity');
             $table->string('payment_method');
             $table->string('payout_email');
-            $table->string('country');
+            $table->string('country_code');
             $table->string('phone_verified');
             $table->string('active');
             $table->string('parent_id');

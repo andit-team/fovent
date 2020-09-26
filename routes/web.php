@@ -175,11 +175,6 @@ Route::group([
 
 		CRUD::resource('agent', 'AgentController');
 
-
-
-
-
-
 	});
 });
 
