@@ -95,7 +95,7 @@ Route::group([
 		Route::get('blacklists/add', 'BlacklistController@banUserByEmail');
 		
 		// CRUD
-		CRUD::resource('advertisings', 'AdvertisingController');
+		CRUD::resource('advertisings', 'AdvertisingController');		
 		CRUD::resource('blacklists', 'BlacklistController');
 		CRUD::resource('categories', 'CategoryController');
 		CRUD::resource('categories/{catId}/subcategories', 'SubCategoryController');
@@ -157,6 +157,29 @@ Route::group([
 		Route::get('plugins/{plugin}/install', 'PluginController@install');
 		Route::get('plugins/{plugin}/uninstall', 'PluginController@uninstall');
 		Route::get('plugins/{plugin}/delete', 'PluginController@delete');
+
+
+
+
+
+		/*
+		|--------------------------------------------------------------------------
+		| Some Word for next Developers
+		|--------------------------------------------------------------------------
+		|
+		| I am Working on existing project as a new developer. The Previous developer useing Laravel backpack to develop it. But I see they didn't follow 
+		| the rule of backpack which provide backpack doc. So I have to developed it with the laravel default system.
+		|
+		*/
+
+
+		CRUD::resource('agent', 'AgentController');
+
+
+
+
+
+
 	});
 });
 
