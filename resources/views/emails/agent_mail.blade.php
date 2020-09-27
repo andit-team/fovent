@@ -320,7 +320,7 @@
 	<p style="box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol';font-size:16px;line-height:1.5em;margin-top:0;text-align:left"><p>You are now agent of fovent,This is your email & password</p>
 
     <h4>Login Mail: {{ $data['email'] }}</h4>
-    <h4>Login Password:{{ $data['password'] }}</h4>
+    <h4>Login Password: {{ $data['password'] }}</h4>
     <p>Thank you</p>
     <p>Login To Your Account</p>
 
