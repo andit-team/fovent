@@ -2226,7 +2226,7 @@ function setPhoneSign($phone, $provider = null)
 function getPhoneIcon($countryCode)
 {
 	if (file_exists(public_path() . '/images/flags/16/' . strtolower($countryCode) . '.png')) {
-		$phoneIcon = '<img src="' . url('images/flags/16/' . strtolower($countryCode) . '.png') . getPictureVersion() . '" style="padding: 2px;">';
+		$phoneIcon = '<img src="' . asset('images/flags/16/' . strtolower($countryCode) . '.png') . getPictureVersion() . '" style="padding: 2px;">';
 	} else {
 		$phoneIcon = '<i class="icon-phone-1"></i>';
 	}

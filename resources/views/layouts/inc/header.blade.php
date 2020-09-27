@@ -34,7 +34,7 @@ if (getSegment(1) != trans('routes.countries')) {
 			<div class="navbar-identity">
 				{{-- Logo --}}
 				<a href="{{ lurl('/') }}" class="navbar-brand logo logo-title">
-					<img src="{{ imgUrl(config('settings.app.logo'), 'logo') }}"
+					<img src=" {{ url('storage/app/public/'.config('settings.app.logo')) }}"
 						 alt="{{ strtolower(config('settings.app.app_name')) }}" class="tooltipHere main-logo" title="" data-placement="bottom"
 						 data-toggle="tooltip"
 						 data-original-title="{!! isset($logoLabel) ? $logoLabel : '' !!}"/>
@@ -75,7 +75,7 @@ if (getSegment(1) != trans('routes.countries')) {
 										@if (isset($multiCountriesIsEnabled) and $multiCountriesIsEnabled)
 											<a href="#selectCountry" data-toggle="modal" class="nav-link">
 												<img class="flag-icon"
-													 src="{{ url('images/flags/32/' . config('country.icode') . '.png') . getPictureVersion() }}"
+													 src="{{ asset('images/flags/32/' . config('country.icode') . '.png') . getPictureVersion() }}"
 													 alt="{{ config('country.name') }}"
 												>
 												<span class="caret hidden-sm"></span>
@@ -83,7 +83,7 @@ if (getSegment(1) != trans('routes.countries')) {
 										@else
 											<a style="cursor: default;">
 												<img class="flag-icon no-caret"
-													 src="{{ url('images/flags/32/' . config('country.icode') . '.png') . getPictureVersion() }}"
+													 src="{{ asset('images/flags/32/' . config('country.icode') . '.png') . getPictureVersion() }}"
 													 alt="{{ config('country.name') }}"
 												>
 											</a>

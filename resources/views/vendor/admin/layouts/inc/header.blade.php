@@ -14,9 +14,13 @@
 			{{-- Logo --}}
 			<a class="navbar-brand" href="{{ url('/') }}" target="_blank">
 				{{-- Logo text --}}
+				{{-- {{dd(url('storage/app/public/'.config('settings.app.logo_dark')))}} --}}
+				{{-- {{dd(config('settings.app.logo_dark'))}} --}}
 				<span class="logo-text">
-					<img src="{{ imgUrl(config('settings.app.logo_dark'), 'adminLogo') }}" alt="{{ strtolower(config('settings.app.app_name')) }}" class="dark-logo img-fluid"/>
-					<img src="{{ imgUrl(config('settings.app.logo_light'), 'adminLogo') }}" alt="{{ strtolower(config('settings.app.app_name')) }}" class="light-logo img-fluid"/>
+					<img src="{{ url('storage/app/public/'.config('settings.app.logo_dark')) }}" alt="{{ strtolower(config('settings.app.app_name')) }}" class="dark-logo img-fluid"/>
+					{{-- <img src="{{ imgUrl(config('settings.app.logo_dark'), 'adminLogo') }}" alt="{{ strtolower(config('settings.app.app_name')) }}" class="dark-logo img-fluid"/> --}}
+					<img src="{{ url('storage/app/public/'.config('settings.app.logo_light')) }}" alt="{{ strtolower(config('settings.app.app_name')) }}" class="light-logo img-fluid"/>
+					{{-- <img src="{{ imgUrl(config('settings.app.logo_light'), 'adminLogo') }}" alt="{{ strtolower(config('settings.app.app_name')) }}" class="light-logo img-fluid"/> --}}
 				</span>
 			</a>
 			

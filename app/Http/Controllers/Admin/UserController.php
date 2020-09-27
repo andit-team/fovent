@@ -484,6 +484,7 @@ class UserController extends PanelController
 	
 	public function store(StoreRequest $request)
 	{
+		// dd($request->all());
 		$this->handleInput($request);
 		
 		return parent::storeCrud();
