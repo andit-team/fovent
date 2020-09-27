@@ -12,6 +12,7 @@ use App\Http\Requests\Admin\Request as UpdateRequest;
 use App\Models\Gender;
 use App\Models\Agent;
 use App\Models\User;
+use App\Mail\AgentAddMail;
 use Session;
 use Hash;
 use DB;
@@ -250,6 +251,8 @@ class AgentController extends PanelController {
 
         $user = User::create($data);
 
+        \Mail::to($data['email'])->send(new AgentAddMail($data));
+
         $data = [
                 'name'                   => $request->name,  
                 'gender'                 => $request->gender,               
@@ -267,15 +270,9 @@ class AgentController extends PanelController {
             ];
     
             $agent = Agent::create($data);
-            // $agent->update(['own_user_id' => $user->id ]);
 
-           
 
-            // $data = [
-            //     'model_type '               =>'App\Models\User',                             
-            //     'role_id '                  => 2,                                  
-            //     'created_at'                => now(),
-            // ];
+
             $roles = [
                 'model_type' => 'App\Models\User',
                 'role_id' => 2,
