@@ -235,9 +235,9 @@ class AgentController extends PanelController {
         // ]);
     }
 
-    public function store(Agent $agent,User $user,StoreRequest $request )
+    public function store(StoreRequest $request)
     {
-        $this->validateForm($request);
+        // $this->validateForm($request);
 
         $data = [
             'name'                   => $request->name,  
@@ -251,42 +251,37 @@ class AgentController extends PanelController {
 
         $user = User::create($data);
 
-        \Mail::to($data['email'])->send(new AgentAddMail($data));
-
         $data = [
-                'name'                   => $request->name,  
-                'gender'                 => $request->gender,               
-                'email'                  => $request->email,
-                'phone'                  => $request->phone,
-                'voucher_code'           => $request->voucher_code,
-                'commission'             => $request->commission,
-                'commission_validity'    => $request->commission_validity,
-                'payment_method'         => $request->payment_method,
-                'payout_email'           => $request->payout_email,
-                'country_code'           => $request->country_code,
-                'phone_verified'         => $request->phone_verified,   
-                'own_user_id'            => $user->id,   
-                'created_at'             => now(),
-            ];
-    
-            $agent = Agent::create($data);
+            'name'                   => $request->name,  
+            'gender'                 => $request->gender,               
+            'email'                  => $request->email,
+            'phone'                  => $request->phone,
+            'voucher_code'           => $request->voucher_code,
+            'commission'             => $request->commission,
+            'commission_validity'    => $request->commission_validity,
+            'payment_method'         => $request->payment_method,
+            'payout_email'           => $request->payout_email,
+            'country_code'           => $request->country_code,
+            'phone_verified'         => $request->phone_verified,   
+            'own_user_id'            => $user->id,   
+            'created_at'             => now(),
+        ];
+
+        $agent = Agent::create($data);
+
+        $roles = [
+            'model_type' => 'App\Models\User',
+            'role_id' => 2,
+            'model_id' => $user->id,
+        ];
+        DB::table('model_has_roles')->insert($roles);
 
 
-
-            $roles = [
-                'model_type' => 'App\Models\User',
-                'role_id' => 2,
-                'model_id' => $user->id,
-            ];
-
-            DB::table('model_has_roles')->insert($roles);
-
-
-       Session::flash('success', 'Agent Inserted Successfully');
-
-       return back();
-
-        // return parent::storeCrud();
+        Session::flash('success', 'Agent Inserted Successfully');
+        $user['password'] = $request->password;
+        \Mail::to($data['email'])->send(new AgentAddMail($user));
+        return redirect('admin/agent');
+        // return agent::storeCrud();
     }
 
     public function update(UpdateRequest $request)
@@ -303,8 +298,10 @@ class AgentController extends PanelController {
     
     private function voucherCode(){
         $lastagent = Agent::orderBy('id','DESC')->limit(1)->first();
-        return 'agent-'.sprintf('%04d',$lastagent->id+1);
-        
+        if($lastagent){
+            return 'agent-'.sprintf('%04d',$lastagent->id+1);
+        }
+        return 'agent-0001';
     }
 
     private function validateForm($request){
