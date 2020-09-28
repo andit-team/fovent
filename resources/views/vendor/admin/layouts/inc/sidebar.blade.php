@@ -48,19 +48,36 @@
 							<i data-feather="home" class="feather-icon"></i> <span class="hide-menu">{{ trans('admin.dashboard') }}</span>
 						</a>
 					</li>
-					<li class="sidebar-item">
-						<a href="#" class="sidebar-link  has-arrow waves-effect waves-dark">
-							<i data-feather="home" class="feather-icon"></i> <span class="hide-menu">Agents</span>
-						</a>
-						<ul aria-expanded="false" class="collapse first-level">
-								<li class="sidebar-item">
-									<a href="{{ admin_url('agent') }}" class="sidebar-link">
-										<i class="mdi mdi-adjust"></i>
-										<span class="hide-menu">{{ trans('admin.list') }}</span>
-									</a>
-								</li>
-						</ul>
-					</li>
+					@if ( auth()->user()->can('list-agent') )
+						<li class="sidebar-item">
+							<a href="#" class="sidebar-link  has-arrow waves-effect waves-dark">
+								<i data-feather="home" class="feather-icon"></i> <span class="hide-menu">Agents</span>
+							</a>
+							<ul aria-expanded="false" class="collapse first-level">
+									<li class="sidebar-item">
+										<a href="{{ admin_url('agent') }}" class="sidebar-link">
+											<i class="mdi mdi-adjust"></i>
+											<span class="hide-menu">{{ trans('agent.list') }}</span>
+										</a>
+									</li>
+							</ul>
+						</li>
+					@endif
+					@if ( auth()->user()->can('create-sub-agent') || auth()->user()->can('list-sub-agent') )
+						<li class="sidebar-item">
+							<a href="#" class="sidebar-link  has-arrow waves-effect waves-dark">
+								<i data-feather="home" class="feather-icon"></i> <span class="hide-menu">Sub-agents</span>
+							</a>
+							<ul aria-expanded="false" class="collapse first-level">
+									<li class="sidebar-item">
+										<a href="{{ admin_url('sub-agent') }}" class="sidebar-link">
+											<i class="mdi mdi-adjust"></i>
+											<span class="hide-menu">{{ trans('admin.list') }}</span>
+										</a>
+									</li>
+							</ul>
+						</li>
+					@endif
 					@if (
 						auth()->user()->can('list-post') ||
 						auth()->user()->can('list-category') ||

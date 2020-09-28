@@ -27,7 +27,7 @@ class CreateAgentsTable extends Migration
             $table->string('country_code');
             $table->string('phone_verified');
             $table->string('active');
-            $table->string('parent_id');
+            $table->string('parent_id')->default(0);
             $table->string('own_user_id');
             $table->timestamps();
         });

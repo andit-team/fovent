@@ -119,7 +119,7 @@ class AppServiceProvider extends ServiceProvider
 			
 			$message = $message . ' - Please <a href="' . $docSymlink . '" target="_blank">see this article</a> for more information.';
 			
-			flash($message)->error();
+			// flash($message)->error();
 		}
 	}
 	

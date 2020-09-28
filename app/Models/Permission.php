@@ -192,6 +192,7 @@ class Permission extends OriginalPermission
 	public static function defaultPermissions()
 	{
 		$permissions = Permission::getRoutesPermissions();
+		// dd($permissions);
 		$permissions = collect($permissions)->mapWithKeys(function ($item) {
 			return [$item['permission'] => $item['permission']];
 		})->sort()->toArray();
@@ -207,7 +208,7 @@ class Permission extends OriginalPermission
 	public static function getRoutesPermissions()
 	{
 		$routeCollection = Route::getRoutes();
-		
+		// dd($routeCollection);
 		$defaultAccess = ['list', 'create', 'update', 'delete', 'reorder', 'details_row'];
 		$defaultAllowAccess = ['list', 'create', 'update', 'delete'];
 		$defaultDenyAccess = ['reorder', 'details_row'];

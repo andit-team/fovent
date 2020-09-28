@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-// use App\Http\Controllers\Controller;
-// use Illuminate\Http\Request;
-// use App\Models\User;
-
 use Larapen\Admin\app\Http\Controllers\PanelController;
 use App\Http\Requests\Admin\Request as StoreRequest;
 use App\Http\Requests\Admin\Request as UpdateRequest;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Gender;
 use App\Models\Agent;
 use App\Models\User;
@@ -17,14 +14,8 @@ use Session;
 use Hash;
 use DB;
 
-class AgentController extends PanelController {
-    
-    // public function index(){
-    //     // echo 'asdf';
-    //     return view('agent.index');
-    // }
-
-
+class SubAgentController extends PanelController
+{
     public function setup()
     {
         /*
@@ -32,9 +23,12 @@ class AgentController extends PanelController {
         | BASIC CRUD INFORMATION
         |--------------------------------------------------------------------------
         */
+        // dd(Auth::user()->id);
         $this->xPanel->setModel('App\Models\Agent');
-        $this->xPanel->setRoute(admin_uri('agent'));
-        $this->xPanel->setEntityNameStrings(trans('admin.agent'), trans('admin.agent'));
+        $this->xPanel->addClause('where', 'parent_id', Auth::user()->id);
+
+        $this->xPanel->setRoute(admin_uri('sub-agent'));
+        $this->xPanel->setEntityNameStrings(trans('admin.sub-agent'), trans('admin.sub-agent'));
         // $this->xPanel->denyAccess(['create', 'delete']);
 
         /*
@@ -243,73 +237,21 @@ class AgentController extends PanelController {
                 'class' => 'form-group col-md-6',
             ],
         ]);
+        $this->xPanel->addField([
+            'name'              => 'parent_id',
+            'label'             => 'parent_id',
+            'type'              => 'hidden',
+            'value'              => Auth::user()->id,
+            // 'wrapperAttributes' => [
+            //     'class' => 'form-group col-md-6',
+            // ],
+        ]);
 
         // $this->xPanel->addField([
         //     'name'  => 'active',
         //     'label' => trans('admin.Active'),
         //     'type'  => 'checkbox',
         // ]);
-    }
-
-    public function store(Agent $agent,User $user,StoreRequest $request )
-    {
-        $this->validateForm($request);
-
-        $data = [
-            'name'                   => $request->name,  
-            'gender'                 => $request->gender,               
-            'email'                  => $request->email,
-            'phone'                  => $request->phone,   
-            'password'               => $request->password,             
-            'country_code'           => $request->country_code,                      
-            'created_at'             => now(),
-        ];
-
-        
-        // \Mail::to($data['email'])->send(new AgentAddMail($data));
-
-        $data['password'] = Hash::make($request->password);
-        $user = User::create($data);
-
-        $data = [
-                'name'                   => $request->name,  
-                'gender'                 => $request->gender,               
-                'email'                  => $request->email,
-                'phone'                  => $request->phone,
-                'voucher_code'           => $request->voucher_code,
-                'commission'             => $request->commission,
-                'commission_validity'    => $request->commission_validity,
-                'payment_method'         => $request->payment_method,
-                'payout_email'           => $request->payout_email,
-                'country_code'           => $request->country_code,
-                'phone_verified'         => $request->phone_verified,   
-                'own_user_id'            => $user->id,   
-                'created_at'             => now(),
-            ];
-    
-            $agent = Agent::create($data);
-
-
-
-            $roles = [
-                'model_type' => 'App\Models\User',
-                'role_id' => 2,
-                'model_id' => $user->id,
-            ];
-
-            DB::table('model_has_roles')->insert($roles);
-
-
-       Session::flash('success', 'Agent Inserted Successfully');
-
-       return back();
-
-        // return parent::storeCrud();
-    }
-
-    public function update(UpdateRequest $request)
-    {
-        return parent::updateCrud();
     }
 
     private function gender()
@@ -326,19 +268,8 @@ class AgentController extends PanelController {
         }
         return 'agent-0001';
     }
-
-    private function validateForm($request){
-        $validatedData = $request->validate([
-            'name' => 'required',
-            'gender' => '',
-            'email' => 'required',
-            // 'email' => 'required|email|unique:agents,email',
-            'phone' => 'required',
-            'voucher_code' => 'required',
-            'commission' => '',
-            'payment_method' => 'required',
-            'payout_email' => 'required',
-            'country' => '',          
-        ]);
+    public function store(StoreRequest $request ){
+        dd($request->all());
     }
+
 }

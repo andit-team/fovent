@@ -174,6 +174,7 @@ Route::group([
 
 
 		CRUD::resource('agent', 'AgentController');
+		CRUD::resource('sub-agent', 'SubAgentController');
 
 	});
 });
