@@ -30,7 +30,6 @@ class AgentAddMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Mail from Fovent')
-                    ->view('emails.agent_mail');
+        return $this->subject('Mail from Fovent')->view('emails.agent_mail');
     }
 }
