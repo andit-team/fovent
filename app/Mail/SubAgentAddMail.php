@@ -7,10 +7,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class AgentAddMail extends Mailable
+class SubAgentAddMail extends Mailable
 {
     use Queueable, SerializesModels;
-
 
     /**
      * Create a new message instance.
@@ -18,7 +17,7 @@ class AgentAddMail extends Mailable
      * @return void
      */
     public $data;
-    
+
     public function __construct($data)
     {
         $this->data = $data;
@@ -31,6 +30,6 @@ class AgentAddMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Mail from Fovent')->view('emails.agent_mail');
+        return $this->subject('Mail from Fovent')->view('emails.subagent_mail');
     }
 }

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Gender;
 use App\Models\Agent;
 use App\Models\User;
-use App\Mail\AgentAddMail;
+use App\Mail\SubAgentAddMail;
 use Session;
 use Hash;
 use DB;
@@ -254,6 +254,65 @@ class SubAgentController extends PanelController
         // ]);
     }
 
+    public function store(StoreRequest $request)
+    {
+        // $this->validateForm($request);
+
+        $data = [
+            'name'                   => $request->name,  
+            'gender'                 => $request->gender,               
+            'email'                  => $request->email,
+            'phone'                  => $request->phone,   
+            'password'               => $request->password,             
+            'country_code'           => $request->country_code,                      
+            'created_at'             => now(),
+        ];
+
+        
+        // \Mail::to($data['email'])->send(new AgentAddMail($data));
+
+        $data['password'] = Hash::make($request->password);
+        $user = User::create($data);
+
+        $data = [
+            'name'                   => $request->name,  
+            'gender'                 => $request->gender,               
+            'email'                  => $request->email,
+            'phone'                  => $request->phone,
+            'voucher_code'           => $request->voucher_code,
+            'commission'             => $request->commission,
+            'commission_validity'    => $request->commission_validity,
+            'payment_method'         => $request->payment_method,
+            'payout_email'           => $request->payout_email,
+            'country_code'           => $request->country_code,
+            'phone_verified'         => $request->phone_verified,   
+            'own_user_id'            => $user->id,   
+            'parent_id'              => Auth::user()->id,
+            'created_at'             => now(),
+        ];
+
+        $agent = Agent::create($data);
+        // dd($agent);
+
+        $roles = [
+            'model_type' => 'App\Models\User',
+            'role_id' => 4,
+            'model_id' => $user->id,
+        ];
+        DB::table('model_has_roles')->insert($roles);
+
+
+        Session::flash('success', 'Agent Inserted Successfully');
+
+        $user['password'] = $request->password;
+
+        \Mail::to($data['email'])->send(new SubAgentAddMail($user));
+
+        return redirect('admin/sub-agent');
+
+        // return agent::storeCrud();
+    }
+
     private function gender()
 	{
 		$entries = Gender::trans()->get();
@@ -268,8 +327,8 @@ class SubAgentController extends PanelController
         }
         return 'agent-0001';
     }
-    public function store(StoreRequest $request ){
-        dd($request->all());
-    }
+    // public function store(StoreRequest $request ){
+    //     dd($request->all());
+    // }
 
 }
