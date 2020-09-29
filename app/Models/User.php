@@ -73,6 +73,9 @@ class User extends BaseUser
 		'language_code',
         'user_type_id',
         'gender_id',
+        'ref_type',
+        'ref_id',
+        'ip_info',
         'name',
 		'photo',
         'about',
@@ -308,6 +311,11 @@ class User extends BaseUser
     public function userType()
     {
         return $this->belongsTo(UserType::class, 'user_type_id');
+	}
+	
+    public function ref()
+    {
+        return $this->belongsTo(User::class, 'ref_id');
     }
     
     /*

@@ -329,7 +329,11 @@ class AgentController extends PanelController {
     }
 
     public function refUser(){
-        return view('agent.ref-user');
+        $users = User::where('ref_type','Agent')->with('ref')->get();
+        return view('agent.ref-user',compact('users'));
+    }
+    public function invite(){
+        return view('invite.invite');
     }
 
     private function validateForm($request){

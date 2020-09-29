@@ -42,12 +42,20 @@
 							</li>
 						</ul>
 					</li>
-					
+
 					<li class="sidebar-item">
 						<a href="{{ admin_url('dashboard') }}" class="sidebar-link waves-effect waves-dark">
 							<i data-feather="home" class="feather-icon"></i> <span class="hide-menu">{{ trans('admin.dashboard') }}</span>
 						</a>
 					</li>
+					
+					<li class="sidebar-item">
+						<a href="{{ admin_url('invitation') }}" class="sidebar-link ">
+							<i class="fas fa-comment-alt"></i>
+							<span class="hide-menu">Invitation</span>
+						</a>
+					</li>
+
 					@if ( auth()->user()->can('list-agent') )
 						<li class="sidebar-item">
 							<a href="#" class="sidebar-link  has-arrow waves-effect waves-dark">
@@ -57,12 +65,31 @@
 									<li class="sidebar-item">
 										<a href="{{ admin_url('agent') }}" class="sidebar-link">
 											<i class="mdi mdi-adjust"></i>
-											<span class="hide-menu">{{ trans('agent.list') }}</span>
+											<span class="hide-menu">{{ 'Agent list' }}</span>
+										</a>
+									</li>
+
+									<li class="sidebar-item">
+										<a href="{{ admin_url('user-agent') }}" class="sidebar-link">
+											<i class="mdi mdi-adjust"></i>
+											<span class="hide-menu">{{ 'Registred Via Agent' }}</span>
+										</a>
+									</li>
+									<li class="sidebar-item">
+										<a href="{{ admin_url('sub-agent') }}" class="sidebar-link">
+											<i class="mdi mdi-adjust"></i>
+											<span class="hide-menu">{{ 'Sub Agents' }}</span>
+										</a>
+									</li>
+									<li class="sidebar-item">
+										<a href="{{ admin_url('user-sub-agent') }}" class="sidebar-link">
+											<i class="mdi mdi-adjust"></i>
+											<span class="hide-menu">{{ 'Registred Via Sub Agents' }}</span>
 										</a>
 									</li>
 							</ul>
 						</li>
-					@endif
+					@endif				
 					@if ( auth()->user()->can('create-sub-agent') || auth()->user()->can('list-sub-agent') )
 						<li class="sidebar-item">
 							<a href="#" class="sidebar-link  has-arrow waves-effect waves-dark">
@@ -76,7 +103,7 @@
 										</a>
 									</li>
 							</ul>
-						</li>
+						</li>					
 					@endif
 					@if (
 						auth()->user()->can('list-post') ||
