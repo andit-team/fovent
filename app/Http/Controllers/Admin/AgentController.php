@@ -264,7 +264,7 @@ class AgentController extends PanelController {
             'country_code'           => $request->country_code,                      
             'created_at'             => now(),
         ];
-
+   
         
         // \Mail::to($data['email'])->send(new AgentAddMail($data));
 
@@ -283,12 +283,13 @@ class AgentController extends PanelController {
             'payout_email'           => $request->payout_email,
             'country_code'           => $request->country_code,
             'phone_verified'         => $request->phone_verified,   
-            'own_user_id'            => $user->id,   
+            'own_user_id'            => $user->id,         
             'created_at'             => now(),
+
+           
         ];
 
         $agent = Agent::create($data);
-
         $roles = [
             'model_type' => 'App\Models\User',
             'role_id' => 2,
