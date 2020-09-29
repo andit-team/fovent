@@ -173,6 +173,7 @@ Route::group([
 		*/
 
 
+		Route::get('agent/ruser', 'AgentController@refUser');
 		CRUD::resource('agent', 'AgentController');
 		CRUD::resource('sub-agent', 'SubAgentController');
 
