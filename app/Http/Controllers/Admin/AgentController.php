@@ -328,6 +328,10 @@ class AgentController extends PanelController {
         return 'agent-0001';
     }
 
+    public function invite(){
+        return view('invite.invite');
+    }
+
     private function validateForm($request){
         $validatedData = $request->validate([
             'name' => 'required',

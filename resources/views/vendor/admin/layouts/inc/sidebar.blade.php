@@ -42,12 +42,20 @@
 							</li>
 						</ul>
 					</li>
-					
+
 					<li class="sidebar-item">
 						<a href="{{ admin_url('dashboard') }}" class="sidebar-link waves-effect waves-dark">
 							<i data-feather="home" class="feather-icon"></i> <span class="hide-menu">{{ trans('admin.dashboard') }}</span>
 						</a>
 					</li>
+					
+					<li class="sidebar-item">
+						<a href="{{ admin_url('invitation') }}" class="sidebar-link ">
+							<i class="fas fa-comment-alt"></i>
+							<span class="hide-menu">Invitation</span>
+						</a>
+					</li>
+
 					@if ( auth()->user()->can('list-agent') )
 						<li class="sidebar-item">
 							<a href="#" class="sidebar-link  has-arrow waves-effect waves-dark">
@@ -62,7 +70,7 @@
 									</li>
 							</ul>
 						</li>
-					@endif
+					@endif				
 					@if ( auth()->user()->can('create-sub-agent') || auth()->user()->can('list-sub-agent') )
 						<li class="sidebar-item">
 							<a href="#" class="sidebar-link  has-arrow waves-effect waves-dark">
@@ -76,7 +84,7 @@
 										</a>
 									</li>
 							</ul>
-						</li>
+						</li>					
 					@endif
 					@if (
 						auth()->user()->can('list-post') ||

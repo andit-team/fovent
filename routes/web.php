@@ -174,6 +174,7 @@ Route::group([
 
 
 		CRUD::resource('agent', 'AgentController');
+		Route::get('invitation','AgentController@invite');
 		CRUD::resource('sub-agent', 'SubAgentController');
 
 	});
