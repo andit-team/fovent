@@ -298,9 +298,13 @@ class AgentController extends PanelController {
 
 
         Session::flash('success', 'Agent Inserted Successfully');
+
         $user['password'] = $request->password;
+
         \Mail::to($data['email'])->send(new AgentAddMail($user));
+
         return redirect('admin/agent');
+        
         // return agent::storeCrud();
     }
 
