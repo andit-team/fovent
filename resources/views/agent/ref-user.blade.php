@@ -32,11 +32,12 @@
                 <div id="crudTable_wrapper" class="dataTables_wrapper dt-bootstrap4"><div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="crudTable_length"><label><select name="crudTable_length" aria-controls="crudTable" class="custom-select custom-select-sm form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="250">250</option><option value="500">500</option></select> records per page</label></div></div><div class="col-sm-12 col-md-6"><div id="crudTable_filter" class="dataTables_filter"><label>Search: <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="crudTable"></label></div></div></div><div class="row"><div class="col-sm-12"><table id="crudTable" class="table table-bordered table-striped display dt-responsive nowrap dataTable dtr-inline" width="100%" role="grid" aria-describedby="crudTable_info" style="width: 100%;">
                     <thead>
                         <tr>
-                            <th>Date</th>
+                            <th >Date</th>
                             <th>Name</th>
-                            <th>Agent Name</th>
+                            <th >Agent Name</th>                           
                             <th>IP</th>
-                            <th>Action</th>
+                            <th>Active</th>
+                            <th width="100px;" >Action</th>
                         </tr>
                     </thead>
         
@@ -45,13 +46,33 @@
                         <tr>
                             <td>{{date('d F Y',strtotime($user->created_at))}} / {{date('h:i',strtotime($user->created_at))}}</td>
                             <td>{{$user->name}}</td>
-                            <td>{{$user->ref->name}}</td>
+                            <td>{{$user->ref->name}}</td>                            
                             <td>{{$user->ip_addr}}</td>
+                            <td></td>
                             <td>
-                                <a class="btn btn-xs btn-warning" data-toggle="tooltip" title="" data-original-title="Cannot impersonate admin users"><i class="fa fa-lock"></i></a>
-                                <a href="https://localhost/fovent/admin/users/23/edit" class="btn btn-xs btn-primary"><i class="far fa-edit"></i> Edit </a>
-                                <a href="https://localhost/fovent/admin/users/23" class="btn btn-xs btn-danger" onclick="register_delete_button_actionss()"><i class="far fa-trash-alt"></i> Delete</a>
+            
+                                <a href="{{ url('impersonate/take/'.$user->id) }}" class="btn btn-xs btn-warning" data-toggle="tooltip" title="" data-original-title="Cannot impersonate admin users"><i class="fas fa-sign-in-alt"></i></a>
+                                <a href="{{ url('admin/users/'.$user->id.'/edit') }}" class="btn btn-xs btn-primary"><i class="far fa-edit"></i> Edit </a>
+
+                                {{-- <form action="{{url('admin/users/delete/', $user->id)}}" method="post" style="margin-top:-2px" id="deleteButton{{$user->id}}">
+                                    @csrf
+                                    @method('delete')
+                                    <a class="btn btn-danger" onclick="return myFunction();" ><i class="far fa-trash-alt"></i> Delete</a>
+                                    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-trash-o"></i></button>
+                                </form> --}}
+
+                                {{-- <a class="btn btn-danger btn-sm" onclick="return myFunction();"  href="{{url('admin/users/delete/'.$user->id)}}"><i class="far fa-trash-alt"></i> Delete</a> --}}
+
+                                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+                                <a href="{{ route('user.destroy',$user->id) }}" class="btn btn-xs btn-danger again" style="font-size: 0.8em;" id="deleteCompany" data-id="{{ $user->id }}">
+                                    <i class="far fa-trash-alt"></i> Delete
+                                </a>
+                               
+
+                                {{-- <a href="https://localhost/fovent/admin/users/23" class="btn btn-xs btn-danger" onclick="register_delete_button_actionss()"><i class="far fa-trash-alt"></i> Delete</a> --}}
                             </td>
+                            {{-- https://localhost/fovent/admin/users/23/edit --}}
                         </tr>
                         @empty
                         <tr>
@@ -96,72 +117,61 @@
     <script>
         $(document).ready(function() {
             $('#example').DataTable();
-        } );
-
-        // function register_delete_button_action() {
-        //         $("[data-button-type=delete]").unbind('click');
-                /* CRUD Delete */
-                /* Ask for confirmation before deleting an item */
-                // function register_delete_button_actionss(e) {
-                //     e.preventDefault();
-                //     var delete_button = $(this);
-                //     var delete_url = $(this).attr('href');
-
-                //     if (confirm("Are you sure you want to delete this item?") == true) {
-				// 		if (isDemo()) {
-				// 			/* Delete the row from the table */
-				// 			delete_button.parentsUntil('tr').parent().remove();
-				// 			return false;
-				// 		}
-						
-                //         $.ajax({
-                //             url: delete_url,
-                //             type: 'DELETE',
-                //             success: function(result) {
-                //                 /* Show an alert with the result */
-                //                 new PNotify({
-                //                     title: "Item Deleted",
-                //                     text: "The item has been deleted successfully.",
-                //                     type: "success"
-                //                 });
-                //                 /* Delete the row from the table */
-                //                 delete_button.parentsUntil('tr').parent().remove();
-                //             },
-                //             error: function(result) {
-				// 				/* Show an alert with the result */
-				// 				/* console.log(result.responseText); */
-				// 				if (typeof result.responseText !== 'undefined') {
-				// 					if (result.responseText.indexOf("Unauthorized access.") >= 0) {
-				// 						new PNotify({
-				// 							title: "NOT deleted",
-				// 							text: result.responseText,
-				// 							type: "error"
-				// 						});
-										
-				// 						return false;
-				// 					}
-				// 				}
-								
-				// 				/* Show an alert with the standard message */
-				// 				new PNotify({
-				// 					title: "NOT deleted",
-				// 					text: "There&#039;s been an error. Your item might not have been deleted.",
-				// 					type: "warning"
-				// 				});
-                //             }
-                //         });
-						
-                //     } else {
-                //         new PNotify({
-                //             title: "Not deleted",
-                //             text: "Nothing happened. Your item is safe.",
-                //             type: "info"
-                //         });
-                //     }
-                // });
-            // }
+        } );   
 
     </script>
+
+{{-- <script>
+    function myFunction() {
+        if(!confirm("Are You Sure to delete this"))
+        event.preventDefault();
+    }
+ </script> --}}
+ 
+<script>
+    $(document).ready(function () {
+
+$("body").on("click","#deleteCompany",function(e){
+
+   if(!confirm("Do you really want to do this?")) {
+      return false;
+    }
+
+   e.preventDefault();
+   var id = $(this).data("id");
+   // var id = $(this).attr('data-id');
+   var token = $("meta[name='csrf-token']").attr("content");
+   var url = e.target;
+
+   $.ajax(
+       {
+         url: url.href, //or you can use url: "company/"+id,
+         type: 'DELETE',
+         data: {
+           _token: token,
+               id: id
+       },
+       success: function (response){
+
+           $("#success").html(response.message)
+
+        //    Swal.fire(
+        //      'Remind!',
+        //      'User deleted successfully!',
+        //      'success'
+        //    )
+        
+        window.location.href = 'user-agent';
+                        
+       }
+    });
+     return false;
+  });
+   
+
+});
+</script>
+ 
 {{-- @section('after_scripts')
 <script src=""></script>
 https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css --}}

@@ -127,6 +127,9 @@ Route::group([
 		CRUD::resource('roles', 'RoleController');
 		CRUD::resource('settings', 'SettingController');
 		CRUD::resource('time_zones', 'TimeZoneController');
+
+		Route::delete('users/delete/{id}', 'UserController@delete')->name('user.destroy');
+
 		CRUD::resource('users', 'UserController');
 		
 		// Others

@@ -4,7 +4,7 @@
     <div class="col-md-6 col-12 align-self-center">
         <h3 class="mb-0">
             <span class="text-capitalize">Agent</span>
-            <small>All  <span>Agent</span> in the database.</small>
+            <small><span>Invitation</span></small>
         </h3>
     </div>
     <div class="col-md-6 col-12 align-self-center d-none d-md-block">

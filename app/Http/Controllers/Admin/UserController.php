@@ -41,7 +41,7 @@ class UserController extends PanelController
 		|--------------------------------------------------------------------------
 		*/
 		$this->xPanel->setModel('App\Models\User');
-		// $this->xPanel->addClause('where', 'is_admin', 1);
+		$this->xPanel->addClause('where', 'is_admin', 1);
 		
 		// If the logged admin user has permissions to manage users and is has not 'super-admin' role,
 		// don't allow him to manage 'super-admin' role's users.
@@ -598,4 +598,25 @@ class UserController extends PanelController
 		
 		return $isAdmin;
 	}
+
+	// public function delete($id)
+    // {
+	// 	$user = User::find($id);
+	// 	dd($user);
+    //     $user->delete();
+
+    //     Session::flash('error', 'User deleted successfully');
+
+	// 	return redirect('admin/agent');
+	// }
+	
+	public function delete($id){
+   
+		$user = User::find($id);
+		$user->delete();
+		return response()->json([
+		  'message' => 'User deleted successfully!'
+		]);
+  
+  }
 }
