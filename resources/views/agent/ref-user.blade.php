@@ -43,7 +43,7 @@
                     <tbody>
                         @forelse ($users as $user)
                         <tr>
-                            <td>{{$user->created_at}}</td>
+                            <td>{{date('d F Y',strtotime($user->created_at))}} / {{date('h:i',strtotime($user->created_at))}}</td>
                             <td>{{$user->name}}</td>
                             <td>{{$user->ref->name}}</td>
                             <td>{{$user->ip_addr}}</td>
