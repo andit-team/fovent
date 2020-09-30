@@ -264,7 +264,9 @@ class SubAgentController extends PanelController
             'email'                  => $request->email,
             'phone'                  => $request->phone,   
             'password'               => $request->password,             
-            'country_code'           => $request->country_code,                      
+            'country_code'           => $request->country_code,
+            'verified_email'         => 1,//$request->phone_verified,
+            'verified_phone'         => 1,//$request->phone_verified,
             'created_at'             => now(),
         ];
 

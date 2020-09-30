@@ -24,6 +24,7 @@ use App\Http\Requests\UserRequest;
 use App\Models\Gender;
 use App\Models\Permission;
 use App\Models\User;
+use App\Models\Agent;
 use App\Models\UserType;
 use App\Notifications\UserActivated;
 use App\Notifications\UserNotification;
@@ -32,6 +33,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
 use Torann\LaravelMetaTags\Facades\MetaTag;
+use Illuminate\Support\Facades\Http;
 
 class RegisterController extends FrontController
 {
@@ -79,6 +81,7 @@ class RegisterController extends FrontController
 	 */
 	public function showRegistrationForm()
 	{
+
 		$data = [];
 		
 		// References
@@ -101,6 +104,7 @@ class RegisterController extends FrontController
 	 */
 	public function register(UserRequest $request)
 	{
+		
 		// Conditions to Verify User's Email or Phone
 		$emailVerificationRequired = config('settings.mail.email_verification') == 1 && $request->filled('email');
 		$phoneVerificationRequired = config('settings.sms.phone_verification') == 1 && $request->filled('phone');
@@ -111,6 +115,26 @@ class RegisterController extends FrontController
 		foreach ($input as $key => $value) {
 			$user->{$key} = $value;
 		}
+
+		if(isset($_COOKIE['_ref'])){
+			$agentVoucher = base64_decode($_COOKIE['_ref']);
+			// echo $agentVoucher;
+			// \DB::enableQueryLog();
+			$agent = Agent::where('voucher_code',$agentVoucher)->with(['user.roles'])->first();
+			// $query = \DB::getQueryLog();
+			// $query = end($query);
+			// print_r($query);
+			// dd($agent);
+			$user->ref_type = $agent->user->roles[0]->name;
+			$user->ref_id = $agent->user->id;
+			setcookie("_ref", "", time() - 3600); // remove cookies
+		}
+
+		$ip =  Ip::get();
+		$ip =  $ip == '::1' ? '27.147.160.253' : $ip;
+		$response = Http::get("https://api.ip2location.com/v2/?ip={$ip}&key=XZP1EPBNC0&package=WS24");
+
+		$user->ip_info = $response->body();
 		
 		$user->country_code   = config('country.code');
 		$user->language_code  = config('app.locale');

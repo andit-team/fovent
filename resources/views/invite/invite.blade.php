@@ -20,8 +20,10 @@
     <h1>Fovent care for your earth and your food</h1>
   <h3>  Hi Dear, {{Auth::user()->name}} !</h3>
     <h4 class ="p-2">Thank you for your cooperation at Fovent .</h4> 
-    <input type="text" value="{{url('/')}}?ref={{Auth::user()->id}}" id="myInput">
-    <button onclick="myFunction()">Copy text</button>
+    <div class="d-flex w-50 m-auto">
+        <input type="text" value="{{url('/')}}?_ref={{base64_encode(Auth::user()->agent->voucher_code)}}&timestamp={{time()}}" readonly class="form-control bg-white" id="myInput">
+        <button onclick="myFunction()" class="btn btn-primary cp_btn">Copy</button>
+    </div>
     <p class="text-danger p-4">Copy this link  to use it on Social Media or to Invite Friends to Friends.</p>
   </div>
 
@@ -38,8 +40,6 @@ function myFunction() {
   
     /* Copy the text inside the text field */
     document.execCommand("copy");
-  
-    /* Alert the copied text */
-    alert("Copied the text: " + copyText.value);
+    document.querySelector('.cp_btn').innerHTML='Copied'
   }
  </script>

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Scopes\ActiveScope;
 use Illuminate\Support\Str;
 use Larapen\Admin\app\Models\Crud;
+use App\Models\User;
 class Agent extends BaseModel{
     use Crud;
     protected $table = 'agent';
@@ -16,5 +17,9 @@ class Agent extends BaseModel{
         parent::boot();
         
         static::addGlobalScope(new ActiveScope());
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class, 'own_user_id');
     }
 }

@@ -263,6 +263,8 @@ class AgentController extends PanelController {
             'password'               => $request->password,             
             'country_code'           => $request->country_code,                      
             'created_at'             => now(),
+            'verified_email'         => 1,//$request->phone_verified,
+            'verified_phone'         => 1,//$request->phone_verified,
         ];
    
         
@@ -282,7 +284,7 @@ class AgentController extends PanelController {
             'payment_method'         => $request->payment_method,
             'payout_email'           => $request->payout_email,
             'country_code'           => $request->country_code,
-            'phone_verified'         => $request->phone_verified,   
+            'phone_verified'         => $request->phone_verified,
             'own_user_id'            => $user->id,         
             'created_at'             => now(),
 
@@ -334,6 +336,11 @@ class AgentController extends PanelController {
         return view('agent.ref-user',compact('users'));
     }
     public function invite(){
+        // $value = 'something from not somewhere';
+        // setcookie("TestCookie", $value, time()+3600); //set cookies
+        // setcookie("TestCookie", "", time() - 3600); // remove cookies
+        // dd($_COOKIE);
+
         return view('invite.invite');
     }
 
