@@ -22,6 +22,7 @@ use App\Models\HomeSection;
 use App\Models\SubAdmin1;
 use App\Models\City;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Torann\LaravelMetaTags\Facades\MetaTag;
 use App\Helpers\Localization\Helpers\Country as CountryLocalizationHelper;
@@ -44,8 +45,13 @@ class HomeController extends FrontController
 	/**
 	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
 	 */
-	public function index()
+	public function index(Request $request)
 	{
+		// dd($request->all());
+		if(isset($request->_ref)){
+			setcookie("_ref", $request->_ref, strtotime( '+30 days' )); //set cookies
+		}
+
 		$data = [];
 		$countryCode = config('country.code');
 		

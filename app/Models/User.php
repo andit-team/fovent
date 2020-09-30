@@ -317,6 +317,10 @@ class User extends BaseUser
     {
         return $this->belongsTo(User::class, 'ref_id');
     }
+    public function agent()
+    {
+        return $this->hasOne(Agent::class, 'own_user_id');
+    }
     
     /*
     |--------------------------------------------------------------------------

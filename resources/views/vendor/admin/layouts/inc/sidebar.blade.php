@@ -48,13 +48,15 @@
 							<i data-feather="home" class="feather-icon"></i> <span class="hide-menu">{{ trans('admin.dashboard') }}</span>
 						</a>
 					</li>
-					
-					<li class="sidebar-item">
-						<a href="{{ admin_url('invitation') }}" class="sidebar-link ">
-							<i class="fas fa-comment-alt"></i>
-							<span class="hide-menu">Invitation</span>
-						</a>
-					</li>
+					{{-- {{dd(auth()->user()->roles[0]->name)}} --}}
+					@if ( auth()->user()->roles[0]->name != "super-admin" )
+						<li class="sidebar-item">
+							<a href="{{ admin_url('invitation') }}" class="sidebar-link ">
+								<i class="fas fa-comment-alt"></i>
+								<span class="hide-menu">Invitation</span>
+							</a>
+						</li>
+					@endif
 
 					@if ( auth()->user()->can('list-agent') )
 						<li class="sidebar-item">
