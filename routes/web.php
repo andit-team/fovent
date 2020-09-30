@@ -174,14 +174,19 @@ Route::group([
 		| the rule of backpack which provide backpack doc. So I have to developed it with the laravel default system.
 		|
 		*/
+        // Agent Ref User //
 
+		Route::get('agent-user/{id}', 'SubAgentController@refAgentUserlist');
+
+		 // Agent Ref User End //
 
 		Route::get('user-agent', 'AgentController@refUser');
 		CRUD::resource('agent', 'AgentController');
 		Route::get('invitation','AgentController@invite');
-		Route::get('user-sub-agent', 'SubAgentController@refUser');
+		Route::get('user-sub-agent', 'SubAgentController@refAgentUser');
 		CRUD::resource('sub-agent', 'SubAgentController');
 
+		
 	});
 });
 

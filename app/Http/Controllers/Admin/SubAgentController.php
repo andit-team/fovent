@@ -331,9 +331,30 @@ class SubAgentController extends PanelController
     }
 
     public function refUser(){
-        $users = User::where('ref_type','Sub-Agent')->with('ref')->get();
+        $users = User::where('ref_type','agent')->with('ref')->get();
         return view('agent.ref-user',compact('users'));
     }
+
+    public function refAgentUser(){
+        $users = User::where('ref_type','sub-agent')->with('ref')->get();
+        return view('agent.ref-user',compact('users'));
+    }
+
+    public function refAgentUserlist($id){
+
+        $users = User::where('ref_type','agent')->where('ref_id',Auth::user()->id)->get();
+
+        // dd($users);
+
+        return view('agent.ref-agent-user',compact('users'));
+
+    }
+    public function refSubAgentUser(){
+        $users = User::where('ref_type','agent')->with('ref')->get();
+        return view('agent.ref-user',compact('users'));
+    }
+
+    
     // public function store(StoreRequest $request ){
     //     dd($request->all());
     // }

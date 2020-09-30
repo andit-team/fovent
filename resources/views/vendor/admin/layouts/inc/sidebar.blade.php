@@ -57,6 +57,14 @@
 							</a>
 						</li>
 					@endif
+					@if ( auth()->user()->roles[0]->name == "sub-agent" )
+						<li class="sidebar-item">
+							<a href="{{ admin_url('agent-user') }}" class="sidebar-link ">
+								<i class="fas fa-comment-alt"></i>
+								<span class="hide-menu">User List</span>
+							</a>
+						</li>
+					@endif
 
 					@if ( auth()->user()->can('list-agent') )
 						<li class="sidebar-item">
@@ -102,6 +110,12 @@
 										<a href="{{ admin_url('sub-agent') }}" class="sidebar-link">
 											<i class="mdi mdi-adjust"></i>
 											<span class="hide-menu">{{ trans('admin.list') }}</span>
+										</a>
+									</li>
+									<li class="sidebar-item">
+										<a href="{{ admin_url('agent-user/{id}') }}" class="sidebar-link">
+											<i class="mdi mdi-adjust"></i>
+											<span class="hide-menu">{{ 'User List' }}</span>
 										</a>
 									</li>
 							</ul>
