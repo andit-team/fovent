@@ -52,7 +52,7 @@
 					@if ( auth()->user()->roles[0]->name != "super-admin" )
 						<li class="sidebar-item">
 							<a href="{{ admin_url('invitation') }}" class="sidebar-link ">
-								<i class="fas fa-comment-alt"></i>
+								<i class="fa fa-bullhorn" style="font-size: 17px;"></i>
 								<span class="hide-menu">Invitation</span>
 							</a>
 						</li>
@@ -95,7 +95,7 @@
 					@if ( auth()->user()->can('create-sub-agent') || auth()->user()->can('list-sub-agent') )
 						<li class="sidebar-item">
 							<a href="#" class="sidebar-link  has-arrow waves-effect waves-dark">
-								<i data-feather="home" class="feather-icon"></i> <span class="hide-menu">Sub-agents</span>
+								<i class="fa fa-users" style="font-size: 17px"></i> <span class="hide-menu">Sub-agents</span>
 							</a>
 							<ul aria-expanded="false" class="collapse first-level">
 									<li class="sidebar-item">

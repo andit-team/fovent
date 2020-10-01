@@ -188,4 +188,20 @@ class Ip
 			return ($tmp[3] + $tmp[2] * 256 + $tmp[1] * 256 * 256 + $tmp[0] * 256 * 256 * 256);
 		}
 	}
+
+	public static function location($json){
+		$loc = '';
+		if(array_key_exists('city_name',$json)){
+			$loc .= $json['city_name'].', ';
+		}
+		if(array_key_exists('region_name',$json)){
+			$loc .= $json['region_name'].', ';
+		}
+		if(array_key_exists('country_name',$json)){
+			$loc .= $json['country_name'];
+		}
+		
+		
+		return $loc;
+	}
 }

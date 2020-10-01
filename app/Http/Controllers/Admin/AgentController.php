@@ -33,6 +33,7 @@ class AgentController extends PanelController {
         |--------------------------------------------------------------------------
         */
         $this->xPanel->setModel('App\Models\Agent');
+        $this->xPanel->addClause('where', 'parent_id', 0);
         $this->xPanel->setRoute(admin_uri('agent'));
         $this->xPanel->setEntityNameStrings(trans('admin.agent'), trans('admin.agent'));
         // $this->xPanel->denyAccess(['create', 'delete']);
@@ -254,6 +255,23 @@ class AgentController extends PanelController {
     public function store(StoreRequest $request)
     {
         // $this->validateForm($request);
+        // $request->validate([
+        //     'email' => 'required',
+        // ]);
+
+        $request->validate([
+            'name' => 'required',
+            'gender' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'phone' => 'required',
+            'voucher_code' => 'required|unique:agent,voucher_code',
+            'commission' => 'required|numeric|max:100',
+            'payment_method' => 'required',
+            'payout_email' => 'required',
+            'country' => 'required',          
+            'password' => 'required',          
+        ]);
+
 
         $data = [
             'name'                   => $request->name,  
