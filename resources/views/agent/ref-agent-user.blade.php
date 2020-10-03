@@ -36,44 +36,39 @@
                             <th>Name</th>
                             <th width="250">Agent Name</th>
                             <th width="250">Location</th>
-                            {{-- <th width="200">Action</th> --}}
-
+                            {{-- <th width="100px;" >Action</th> --}}
                         </tr>
                     </thead>
         
                     <tbody>
-                        @forelse ($users as $user)
-                        <tr>
-                            <td>{{date('d F Y',strtotime($user->created_at))}} / {{date('h:i a',strtotime($user->created_at))}}</td>
-                            <td>{{$user->name}}</td>
-                            <td>{{$user->ref->name}}</td>                            
-                            <td>{{App\Helpers\Ip::location(json_decode($user->ip_info,true))}}</td>
-                            {{-- <td>
-                                <a href="" class="ajax-request" data-table="users" data-field="verified_email" data-line-id="verified_email34" data-id="34" data-value="1"><i id="verified_email34" class="admin-single-icon fa fa-toggle-on" aria-hidden="true"></i></a>
-                                
-                                <a href="{{ url('impersonate/take/'.$user->id) }}" class="btn btn-xs btn-warning" data-toggle="tooltip" title="" data-original-title="Cannot impersonate admin users"><i class="fas fa-sign-in-alt"></i></a>
-                                <a href="{{ url('admin/users/'.$user->id.'/edit') }}" class="btn btn-xs btn-primary"><i class="far fa-edit"></i> Edit </a> --}}
+                        @forelse ($subagents as $sub)
+                            @php
+                                $users = App\Models\User::where('ref_type','sub-agent')->where('ref_id',$sub->own_user_id)->with('ref')->get();
+                                // dd($sub);
+                            @endphp
+                            @foreach($users as $user)
+                                <tr>
+                                    <td>{{date('d F Y',strtotime($user->created_at))}} / {{date('h:i a',strtotime($user->created_at))}}</td>
+                                    <td>{{$user->name}}</td>
+                                    <td>{{$sub->name}}</td>                            
+                                    <td>{{App\Helpers\Ip::location(json_decode($user->ip_info,true))}}</td>
+                                    {{-- <td>
+                    
+                                        <a href="{{ url('impersonate/take/'.$user->id) }}" class="btn btn-xs btn-warning" data-toggle="tooltip" title="" data-original-title="Cannot impersonate admin users"><i class="fas fa-sign-in-alt"></i></a>
+                                        <a href="{{ url('admin/users/'.$user->id.'/edit') }}" class="btn btn-xs btn-primary"><i class="far fa-edit"></i> Edit </a>
 
-                                {{-- <form action="{{url('admin/users/delete/', $user->id)}}" method="post" style="margin-top:-2px" id="deleteButton{{$user->id}}">
-                                    @csrf
-                                    @method('delete')
-                                    <a class="btn btn-danger" onclick="return myFunction();" ><i class="far fa-trash-alt"></i> Delete</a>
-                                    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-trash-o"></i></button>
-                                </form> --}}
 
-                                {{-- <a class="btn btn-danger btn-sm" onclick="return myFunction();"  href="{{url('admin/users/delete/'.$user->id)}}"><i class="far fa-trash-alt"></i> Delete</a> --}}
+                                        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
-                                {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+                                        <a href="{{ route('user.destroy',$user->id) }}" class="btn btn-xs btn-danger again" style="font-size: 0.8em;" id="deleteCompany" data-id="{{ $user->id }}">
+                                            <i class="far fa-trash-alt"></i> Delete
+                                        </a>
+                                    
 
-                                <a href="{{ route('user.destroy',$user->id) }}" class="btn btn-xs btn-danger again" style="font-size: 0.8em;" id="deleteCompany" data-id="{{ $user->id }}">
-                                    <i class="far fa-trash-alt"></i> Delete
-                                </a> --}}
-                               
-
-                                {{-- <a href="https://localhost/fovent/admin/users/23" class="btn btn-xs btn-danger" onclick="register_delete_button_actionss()"><i class="far fa-trash-alt"></i> Delete</a> --}}
-                            {{-- </td> --}}
-                            {{-- https://localhost/fovent/admin/users/23/edit --}}
-                        </tr>
+                                    </td> --}}
+                                    {{-- https://localhost/fovent/admin/users/23/edit --}}
+                                </tr>
+                            @endforeach
                         @empty
                         <tr>
                             <td colspan="5"> No User Found</td>
@@ -87,7 +82,6 @@
                             <th>Name</th>
                             <th>Agent Name</th>
                             <th>Location</th>
-                            {{-- <th>Action</th> --}}
                         </tr>
                     </tfoot>
                 </table><div id="crudTable_processing" class="dataTables_processing card" style="display: none;">Processing...</div></div></div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="crudTable_info" role="status" aria-live="polite">Showing 1 to 2 of 2 entries.</div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="crudTable_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="crudTable_previous"><a href="#" aria-controls="crudTable" data-dt-idx="0" tabindex="0" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="crudTable" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item next disabled" id="crudTable_next"><a href="#" aria-controls="crudTable" data-dt-idx="2" tabindex="0" class="page-link">Next</a></li></ul></div></div></div></div>

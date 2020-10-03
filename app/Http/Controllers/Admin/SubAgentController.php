@@ -26,10 +26,12 @@ class SubAgentController extends PanelController
         // dd(Auth::user()->id);
         $this->xPanel->setModel('App\Models\Agent');
         $this->xPanel->addClause('where', 'parent_id','!=',0);
-        // $this->xPanel->addClause('where', 'parent_id', Auth::user()->id);
+        if(auth()->user()->hasRole('agent')){
+            $this->xPanel->addClause('where', 'parent_id', Auth::user()->id);
+        }
 
         $this->xPanel->setRoute(admin_uri('sub-agent'));
-        $this->xPanel->setEntityNameStrings(trans('admin.sub-agent'), trans('admin.sub-agent'));
+        $this->xPanel->setEntityNameStrings(trans('sub-agent'), trans('sub-agent'));
         // $this->xPanel->denyAccess(['create', 'delete']);
 
         /*
@@ -267,7 +269,7 @@ class SubAgentController extends PanelController
             'commission' => 'required|numeric|max:100',
             'payment_method' => 'required',
             'payout_email' => 'required',
-            'country' => 'required',          
+            // 'country' => 'required',          
             'password' => 'required',          
         ]);
 
@@ -345,9 +347,32 @@ class SubAgentController extends PanelController
     }
 
     public function refUser(){
-        $users = User::where('ref_type','Sub-Agent')->with('ref')->get();
+        $users = User::where('ref_type','agent')->with('ref')->get();
         return view('agent.ref-user',compact('users'));
     }
+
+    public function refAgentUser(){
+        $users = User::where('ref_type','sub-agent')->with('ref')->get();
+        return view('agent.ref-user',compact('users'));
+    }
+
+    public function refAgentUserlist(){
+
+        $subagents = Agent::where('parent_id',Auth::user()->id)->with('user.ref')->get();
+        // dd($subagents);
+        // $users = User::where('ref_type','agent')->where('ref_id',Auth::user()->id)->get();
+
+        // dd($users);
+
+        return view('agent.ref-agent-user',compact('subagents'));
+
+    }
+    public function refSubAgentUser(){
+        $users = User::where('ref_type','agent')->with('ref')->get();
+        return view('agent.ref-user',compact('users'));
+    }
+
+    
     // public function store(StoreRequest $request ){
     //     dd($request->all());
     // }

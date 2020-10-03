@@ -27,7 +27,7 @@ trait CountryTrait
     */
 	public function getCountryHtml()
 	{
-		$out = '';
+        $out = '';
 		
 		if (isset($this->country_code)) {
 			$countryName = (isset($this->country) && isset($this->country->asciiname)) ? $this->country->asciiname : null;

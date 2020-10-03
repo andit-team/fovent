@@ -127,6 +127,9 @@ Route::group([
 		CRUD::resource('roles', 'RoleController');
 		CRUD::resource('settings', 'SettingController');
 		CRUD::resource('time_zones', 'TimeZoneController');
+
+		Route::delete('users/delete/{id}', 'UserController@delete')->name('user.destroy');
+
 		CRUD::resource('users', 'UserController');
 		
 		// Others
@@ -171,14 +174,25 @@ Route::group([
 		| the rule of backpack which provide backpack doc. So I have to developed it with the laravel default system.
 		|
 		*/
+        // Agent Ref User //
+
+		CRUD::resource('user-agent', 'UserAgentConrtoller'); //-- Admin Panel
+		CRUD::resource('user-sub-agent', 'UserSubAgentConrtoller'); //-- Admin Panel
+		CRUD::resource('agent', 'AgentController'); //-- Admin Panel
+		CRUD::resource('sub-agent', 'SubAgentController'); //-- Admin Panel
 
 
-		Route::get('user-agent', 'AgentController@refUser');
-		CRUD::resource('agent', 'AgentController');
 		Route::get('invitation','AgentController@invite');
-		Route::get('user-sub-agent', 'SubAgentController@refUser');
-		CRUD::resource('sub-agent', 'SubAgentController');
+		Route::get('my-user', 'AgentController@OwnRefUser');
+		Route::get('sub-agent-user', 'SubAgentController@refAgentUserlist');
 
+
+		 // Agent Ref User End //
+
+		// Route::get('user-agent', 'AgentController@refUser');
+		// Route::get('user-sub-agent', 'SubAgentController@refAgentUser');
+
+		
 	});
 });
 

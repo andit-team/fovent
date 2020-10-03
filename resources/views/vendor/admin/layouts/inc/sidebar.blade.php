@@ -49,7 +49,8 @@
 						</a>
 					</li>
 					{{-- {{dd(auth()->user()->roles[0]->name)}} --}}
-					@if ( auth()->user()->roles[0]->name != "super-admin" )
+					{{-- @if ( auth()->user()->roles[0]->name != "super-admin" ) --}}
+					@if(auth()->user()->hasRole('agent') || auth()->user()->hasRole('sub-agent'))
 						<li class="sidebar-item">
 							<a href="{{ admin_url('invitation') }}" class="sidebar-link ">
 								<i class="fa fa-bullhorn" style="font-size: 17px;"></i>
@@ -58,7 +59,18 @@
 						</li>
 					@endif
 
-					@if ( auth()->user()->can('list-agent') )
+					@if(auth()->user()->hasRole('agent') || auth()->user()->hasRole('sub-agent'))
+						<li class="sidebar-item">
+							<a href="{{ admin_url('my-user') }}" class="sidebar-link ">
+								<i class="fa fa-user" style="font-size: 17px;" aria-hidden="true"></i>
+								<span class="hide-menu">My Users</span>
+							</a>
+						</li>
+					@endif
+
+
+					@if(auth()->user()->hasRole('super-admin'))
+					{{-- {{die('asdfadsf')}} --}}
 						<li class="sidebar-item">
 							<a href="#" class="sidebar-link  has-arrow waves-effect waves-dark">
 								<i data-feather="home" class="feather-icon"></i> <span class="hide-menu">Agents</span>
@@ -102,6 +114,12 @@
 										<a href="{{ admin_url('sub-agent') }}" class="sidebar-link">
 											<i class="mdi mdi-adjust"></i>
 											<span class="hide-menu">{{ trans('admin.list') }}</span>
+										</a>
+									</li>
+									<li class="sidebar-item">
+										<a href="{{ admin_url('sub-agent-user') }}" class="sidebar-link">
+											<i class="mdi mdi-adjust"></i>
+											<span class="hide-menu">{{ 'User List' }}</span>
 										</a>
 									</li>
 							</ul>

@@ -1554,6 +1554,24 @@ function getCountriesFromArray()
 	return $arr;
 }
 
+
+function getAgents(){
+	$arr = [];
+	$agents = App\Models\Agent::where('parent_id',0)->get();
+	foreach($agents as $agent){
+		$arr[$agent->own_user_id] = $agent->name;
+	}
+	return $arr;
+}
+
+function getSubAgents(){
+	$arr = [];
+	$agents = App\Models\Agent::where('parent_id','!=',0)->get();
+	foreach($agents as $agent){
+		$arr[$agent->own_user_id] = $agent->name;
+	}
+	return $arr;
+}
 /**
  * Get all countries from DB (Geonames) & Translate them
  *
@@ -1587,7 +1605,6 @@ function getCountries()
 			$arr[$code] = $name;
 		}
 	}
-	
 	return $arr;
 }
 

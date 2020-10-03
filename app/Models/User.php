@@ -14,7 +14,7 @@
  */
 
 namespace App\Models;
-
+use App\Helpers\Ip;
 use App\Helpers\Files\Storage\StorageDisk;
 use App\Models\Scopes\LocalizedScope;
 use App\Models\Scopes\VerifiedScope;
@@ -552,5 +552,17 @@ class User extends BaseUser
 			
 			return false;
 		}
-	}
+    }
+    
+
+    public function ipInfoLocation(){
+        return Ip::location(json_decode($this->ip_info,true));
+    }
+    public function referenceAgent(){
+        $agent = User::find($this->ref_id);
+        if($agent){
+            return $agent->name;
+        }
+        return 'Self';
+    }
 }

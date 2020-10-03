@@ -268,7 +268,7 @@ class AgentController extends PanelController {
             'commission' => 'required|numeric|max:100',
             'payment_method' => 'required',
             'payout_email' => 'required',
-            'country' => 'required',          
+            // 'country' => 'required',          
             'password' => 'required',          
         ]);
 
@@ -349,8 +349,12 @@ class AgentController extends PanelController {
         return 'agent-0001';
     }
 
-    public function refUser(){
-        $users = User::where('ref_type','Agent')->with('ref')->get();
+    public function OwnRefUser(){
+        if(auth()->user()->hasRole('agent')){
+            $users = User::where('ref_type','agent')->where('ref_id',auth()->user()->id)->with('ref')->get();
+        }else{
+            $users = User::where('ref_type','sub-agent')->where('ref_id',auth()->user()->id)->with('ref')->get();
+        }
         return view('agent.ref-user',compact('users'));
     }
     public function invite(){
@@ -362,18 +366,4 @@ class AgentController extends PanelController {
         return view('invite.invite');
     }
 
-    private function validateForm($request){
-        $validatedData = $request->validate([
-            'name' => 'required',
-            'gender' => '',
-            'email' => 'required',
-            // 'email' => 'required|email|unique:agents,email',
-            'phone' => 'required',
-            'voucher_code' => 'required',
-            'commission' => '',
-            'payment_method' => 'required',
-            'payout_email' => 'required',
-            'country' => '',          
-        ]);
-    }
 }
