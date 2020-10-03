@@ -3,9 +3,9 @@
 	
 	{{-- Single Step Form --}}
 	@if (config('settings.single.publication_form_type') == '2')
-		<link href="{{ url('assets/plugins/bootstrap-fileinput/css/fileinput.min.css') }}" rel="stylesheet">
+		<link href="{{ asset('assets/plugins/bootstrap-fileinput/css/fileinput.min.css') }}" rel="stylesheet">
 		@if (config('lang.direction') == 'rtl')
-			<link href="{{ url('assets/plugins/bootstrap-fileinput/css/fileinput-rtl.min.css') }}" rel="stylesheet">
+			<link href="{{ asset('assets/plugins/bootstrap-fileinput/css/fileinput-rtl.min.css') }}" rel="stylesheet">
 		@endif
 		
 		<style>
@@ -32,7 +32,7 @@
 		</style>
 	@endif
 	
-	<link href="{{ url('assets/plugins/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
+	<link href="{{ asset('assets/plugins/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
 @endpush
 
 @push('after_scripts_stack')
@@ -41,21 +41,21 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.payment/1.2.3/jquery.payment.min.js"></script>
 	@if (file_exists(public_path() . '/assets/plugins/forms/validation/localization/messages_'.config('app.locale').'.min.js'))
-		<script src="{{ url('assets/plugins/forms/validation/localization/messages_'.config('app.locale').'.min.js') }}" type="text/javascript"></script>
+		<script src="{{ asset('assets/plugins/forms/validation/localization/messages_'.config('app.locale').'.min.js') }}" type="text/javascript"></script>
 	@endif
 	
 	{{-- Single Step Form --}}
 	@if (config('settings.single.publication_form_type') == '2')
-		<script src="{{ url('assets/plugins/bootstrap-fileinput/js/plugins/sortable.min.js') }}" type="text/javascript"></script>
-		<script src="{{ url('assets/plugins/bootstrap-fileinput/js/fileinput.min.js') }}" type="text/javascript"></script>
-		<script src="{{ url('assets/plugins/bootstrap-fileinput/themes/fa/theme.js') }}" type="text/javascript"></script>
+		<script src="{{ asset('assets/plugins/bootstrap-fileinput/js/plugins/sortable.min.js') }}" type="text/javascript"></script>
+		<script src="{{ asset('assets/plugins/bootstrap-fileinput/js/fileinput.min.js') }}" type="text/javascript"></script>
+		<script src="{{ asset('assets/plugins/bootstrap-fileinput/themes/fa/theme.js') }}" type="text/javascript"></script>
 		@if (file_exists(public_path() . '/assets/plugins/bootstrap-fileinput/js/locales/'.ietfLangTag(config('app.locale')).'.js'))
-			<script src="{{ url('assets/plugins/bootstrap-fileinput/js/locales/'.ietfLangTag(config('app.locale')).'.js') }}" type="text/javascript"></script>
+			<script src="{{ asset('assets/plugins/bootstrap-fileinput/js/locales/'.ietfLangTag(config('app.locale')).'.js') }}" type="text/javascript"></script>
 		@endif
 	@endif
 	
-	<script src="{{ url('assets/plugins/momentjs/moment.min.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/plugins/bootstrap-daterangepicker/daterangepicker.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('assets/plugins/momentjs/moment.min.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('assets/plugins/bootstrap-daterangepicker/daterangepicker.js') }}" type="text/javascript"></script>
 	
 	<?php
 	$category = isset($postCatParentId) ? (int)$postCatParentId : 0;
@@ -238,6 +238,6 @@
 		});
 	</script>
 	
-	<script src="{{ url('assets/js/app/d.select.category.js') . vTime() }}"></script>
-	<script src="{{ url('assets/js/app/d.select.location.js') . vTime() }}"></script>
+	<script src="{{ asset('assets/js/app/d.select.category.js') . vTime() }}"></script>
+	<script src="{{ asset('assets/js/app/d.select.location.js') . vTime() }}"></script>
 @endpush

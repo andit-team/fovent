@@ -57,7 +57,7 @@
 			elements: true
 		};
 	</script>
-	<script src="{{ url('assets/js/pace.min.js') }}"></script>
+	<script src="{{ asset('assets/js/pace.min.js') }}"></script>
 </head>
 <body class="{{ config('settings.style.app_skin') }}">
 

@@ -102,5 +102,5 @@
 @endsection
 
 @section('after_scripts')
-	<script src="{{ url('assets/js/form-validation.js') }}"></script>
+	<script src="{{ asset('assets/js/form-validation.js') }}"></script>
 @endsection

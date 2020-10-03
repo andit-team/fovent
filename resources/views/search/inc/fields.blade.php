@@ -242,12 +242,12 @@
 @endif
 
 @section('after_styles')
-	<link href="{{ url('assets/plugins/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
+	<link href="{{ asset('assets/plugins/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
 @endsection
 @section('after_scripts')
 	@parent
-	<script src="{{ url('assets/plugins/momentjs/moment.min.js') }}" type="text/javascript"></script>
-	<script src="{{ url('assets/plugins/bootstrap-daterangepicker/daterangepicker.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('assets/plugins/momentjs/moment.min.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('assets/plugins/bootstrap-daterangepicker/daterangepicker.js') }}" type="text/javascript"></script>
 	<script>
 		$(document).ready(function ()
 		{

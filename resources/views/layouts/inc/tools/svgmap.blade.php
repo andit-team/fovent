@@ -123,7 +123,7 @@ if (isset($citiesOptions)) {
 
 @section('after_scripts')
 	@parent
-	<script src="{{ url('assets/plugins/twism/jquery.twism.js') }}"></script>
+	<script src="{{ asset('assets/plugins/twism/jquery.twism.js') }}"></script>
 	<script>
 		$(document).ready(function () {
 			@if ($map['show'])

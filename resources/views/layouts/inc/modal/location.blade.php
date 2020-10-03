@@ -57,5 +57,5 @@
             var modalDefaultAdminCode = 0;
         @endif
 	</script>
-	<script src="{{ url('assets/js/app/load.cities.js') . vTime() }}"></script>
+	<script src="{{ asset('assets/js/app/load.cities.js') . vTime() }}"></script>
 @endsection

@@ -125,7 +125,7 @@
     }
     ?>
     @if ($editorLocale != 'en-US')
-        <script src="{{ url('assets/plugins/summernote/lang/summernote-' . $editorLocale . '.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets/plugins/summernote/lang/summernote-' . $editorLocale . '.js') }}" type="text/javascript"></script>
     @endif
     <script type="text/javascript">
         $(document).ready(function() {

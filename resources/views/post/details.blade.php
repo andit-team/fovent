@@ -521,9 +521,9 @@
 @section('after_styles')
 	<!-- bxSlider CSS file -->
 	@if (config('lang.direction') == 'rtl')
-		<link href="{{ url('assets/plugins/bxslider/jquery.bxslider.rtl.css') }}" rel="stylesheet"/>
+		<link href="{{ asset('assets/plugins/bxslider/jquery.bxslider.rtl.css') }}" rel="stylesheet"/>
 	@else
-		<link href="{{ url('assets/plugins/bxslider/jquery.bxslider.css') }}" rel="stylesheet"/>
+		<link href="{{ asset('assets/plugins/bxslider/jquery.bxslider.css') }}" rel="stylesheet"/>
 	@endif
 @endsection
 
@@ -539,7 +539,7 @@
     @endif
 
 	<!-- bxSlider Javascript file -->
-	<script src="{{ url('assets/plugins/bxslider/jquery.bxslider.min.js') }}"></script>
+	<script src="{{ asset('assets/plugins/bxslider/jquery.bxslider.min.js') }}"></script>
     
 	<script>
 		/* Favorites Translation */
