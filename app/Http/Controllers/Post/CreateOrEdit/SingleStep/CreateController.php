@@ -29,6 +29,7 @@ use App\Models\Post;
 use App\Models\PostType;
 use App\Models\Category;
 use App\Models\Package;
+use App\Models\AgentCommision;
 use App\Models\City;
 use App\Models\Scopes\VerifiedScope;
 use App\Models\User;
@@ -172,7 +173,6 @@ class CreateController extends FrontController
 		$city = City::find($request->input('city_id', 0));
 		if (empty($city)) {
 			flash(t("posting_ads_is_disabled"))->error();
-			
 			return back()->withInput();
 		}
 		
@@ -217,7 +217,22 @@ class CreateController extends FrontController
 		}
 		
 		// Save
-		$post->save();
+		$newPost = $post->save();
+
+		if(auth()->user()->ref_id != NULL){
+			$commission = [
+				'agent_user_id' 		=> auth()->user()->ref_id,
+				'post_id'				=> $newPost->id,
+				'commision_percent'		=> User::find(auth()->user()->ref_id)->agent->commission,
+				'cost_of_post'			=> 0,
+				'commision'				=> 0,
+				'agent_type'			=> auth()->user()->ref_type,
+				'user_name'				=> auth()->user()->name,
+				'description'			=> auth()->user()->name.'| posted with 0 amount',
+				'currency'				=> 'EUR',
+			];
+			AgentCommision::create($commission);
+		}
 		
 		// Save all pictures
 		$files = $request->file('pictures');
@@ -246,7 +261,7 @@ class CreateController extends FrontController
 		$this->createPostFieldsValues($post, $request);
 		
 		// Auto-Register the Author
-		$user = $this->register($post);
+		$user = $this->register($post,1);
 		
 		
 		// MAKE A PAYMENT (IF NEEDED)

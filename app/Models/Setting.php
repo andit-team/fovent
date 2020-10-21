@@ -1281,6 +1281,10 @@ class Setting extends BaseModel
 		$formTitle = '{"name":"group_name","type":"custom_html","value":"<h2 class=\"setting-group-name\">' . $this->name . '</h2>","disableTrans":"true"},
 	{"name":"group_breadcrumb","type":"custom_html","value":"<p class=\"setting-group-breadcrumb\">' . $breadcrumb . $this->name . '</p>","disableTrans":"true"},';
 		
+	if ($this->key == 'tax') {
+		$value = '{"name":"tax_percent","label":"Tax Percent","type":"number"}';
+	}
+
 		
 		if ($this->key == 'app') {
 			$value = '{"name":"separator_1","type":"custom_html","value":"app_html_brand_info"},
@@ -1764,10 +1768,10 @@ class Setting extends BaseModel
 		
 		if ($this->key == 'footer') {
 			$value = '{"name":"hide_links","label":"Hide Links","type":"checkbox"},
-	{"name":"hide_payment_plugins_logos","label":"Hide Payment Plugins Logos","type":"checkbox"},
-	{"name":"hide_powered_by","label":"Hide Powered by Info","type":"checkbox"},
-	{"name":"powered_by_info","label":"Powered by","type":"text"},
-	{"name":"tracking_code","label":"Tracking Code","type":"textarea","attributes":{"rows":"15"},"hint":"tracking_code_hint"}';
+			{"name":"hide_payment_plugins_logos","label":"Hide Payment Plugins Logos","type":"checkbox"},
+			{"name":"hide_powered_by","label":"Hide Powered by Info","type":"checkbox"},
+			{"name":"powered_by_info","label":"Powered by","type":"text"},
+			{"name":"tracking_code","label":"Tracking Code","type":"textarea","attributes":{"rows":"15"},"hint":"tracking_code_hint"}';
 		}
 		
 		if ($this->key == 'backup') {

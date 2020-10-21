@@ -19,18 +19,23 @@ use App\Helpers\Ip;
 use App\Models\Post;
 use App\Models\Scopes\VerifiedScope;
 use App\Models\User;
+use App\Models\AgentCommision;
+use App\Models\Agent;
 use App\Notifications\SendPasswordAndEmailVerification;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Traits\CommissionTrait;
+use Illuminate\Support\Facades\Http;
 
 trait AutoRegistrationTrait
 {
+	use CommissionTrait;
 	/**
 	 * Auto Register a new user account.
 	 *
 	 * @param \App\Models\Post $post
 	 * @return \App\Models\User|bool
 	 */
-	public function register(Post $post)
+	public function register(Post $post , $flag=0)
 	{
 		// Don't auto-register the User if he's logged in, ...
 		// or when the 'auto_registration' option is disabled,
@@ -61,7 +66,11 @@ trait AutoRegistrationTrait
 		
 		// Generate random password
 		$randomPassword = getRandomPassword(8);
-		
+		$ip =  Ip::get();
+		$ip =  $ip == '::1' ? '27.147.160.253' : $ip;
+		$response = Http::get("https://api.ip2location.com/v2/?ip={$ip}&key=XZP1EPBNC0&package=WS24");
+
+		$user->ip_info = $response->body();
 		$user->country_code   = config('country.code');
 		$user->language_code  = config('app.locale');
 		$user->name           = $post->contact_name;
@@ -70,17 +79,51 @@ trait AutoRegistrationTrait
 		$user->phone          = $post->phone;
 		$user->phone_hidden   = 0;
 		$user->ip_addr        = Ip::get();
-		$user->verified_email = 1;
-		$user->verified_phone = 1;
+		$user->verified_email = 0;
+		$user->verified_phone = 0;
 		
 		// Email verification key generation
 		if ($emailVerificationRequired) {
 			$user->email_token    = md5(microtime() . mt_rand());
 			$user->verified_email = 0;
 		}
+
+		//Check Reference
+		if(isset($_COOKIE['_ref'])){
+			$agentVoucher = base64_decode($_COOKIE['_ref']);
+			$agent = Agent::where('voucher_code',$agentVoucher)->with(['user.roles'])->first();
+			$user->ref_type = $agent->user->roles[0]->name;
+			$user->ref_id = $agent->user->id;
+			setcookie("_ref", "", time() - 3600); // remove cookies
+		}
+
 		
 		// Save
 		$user->save();
+
+		//update post user
+		$post->user_id = $user->id;
+		$post->save();
+		
+		// dd($user)
+		//save commission if they are posted add.
+		if($flag == 1){
+			$this->commissionAdd($user,$post);
+			// $agent = Agent::where('own_user_id',$user->ref_id)->first();
+			// // dd($agent);
+			// $commission = [
+			// 	'agent_user_id' 		=> $user->ref_id,
+			// 	'user_name'		 		=> $user->name,
+			// 	'post_id'				=> $post->id,
+			// 	'commision_percent'		=> $agent->commission,
+			// 	'cost_of_post'			=> 0,
+			// 	'commision'				=> 0,
+			// 	'agent_type'			=> $user->ref_type,
+			// 	'description'			=> $user->name.'| posted with 0 amount',
+			// 	'currency'				=> 'EUR',
+			// ];
+			// AgentCommision::create($commission);
+		}
 		
 		// Send Generated Password by Email
 		try {

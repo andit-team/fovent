@@ -197,6 +197,7 @@
                     
                     /* Response contains id and card, which contains additional card details */
                     console.log(response.id);
+                    console.log('amina');
                     console.log(response.card);
                     var stripeToken = response.id;
                 

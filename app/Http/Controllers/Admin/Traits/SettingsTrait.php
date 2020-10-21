@@ -26,7 +26,6 @@ trait SettingsTrait
 	public function edit($id, $childId = null)
 	{
 		$this->xPanel->hasAccessOrFail('update');
-		
 		$entry = null;
 		if (!empty($childId)) {
 			$entry = $this->xPanel->getEntryWithParentAndChildKeys($id, $childId);
@@ -36,7 +35,9 @@ trait SettingsTrait
 		$this->data['entry'] = (isset($entry) && !empty($entry)) ? $entry : $this->xPanel->getEntry($id);
 		
 		// Add the 'field' field
+		// dd($this->data['entry']->value);
 		$fieldColValue = json_decode($this->data['entry']->field, true);
+		// dd($fieldColValue);
 		$this->addField($fieldColValue);
 		
 		// ...
@@ -46,6 +47,7 @@ trait SettingsTrait
 		$this->data['title'] = trans('admin.edit') . ' ' . $this->xPanel->entityName;
 		
 		$this->data['id'] = $id;
+		// dd($this->data);
 		
 		return view('admin::panel.edit', $this->data);
 	}
@@ -56,6 +58,7 @@ trait SettingsTrait
 	 */
 	public function updateTrait($request)
 	{
+		
 		$this->data['entry'] = $this->xPanel->getEntry($request->input('id'));
 		
 		// Add the 'field' field

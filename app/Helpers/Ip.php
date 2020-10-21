@@ -191,6 +191,9 @@ class Ip
 
 	public static function location($json){
 		$loc = '';
+		if(!$json){
+			return 'location not found';
+		}
 		if(array_key_exists('city_name',$json)){
 			$loc .= $json['city_name'].', ';
 		}

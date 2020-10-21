@@ -6,6 +6,7 @@ use App\Models\Scopes\ActiveScope;
 use Illuminate\Support\Str;
 use Larapen\Admin\app\Models\Crud;
 use App\Models\User;
+use App\Models\AgentCommision;
 class Agent extends BaseModel{
     use Crud;
     protected $table = 'agent';
@@ -20,5 +21,9 @@ class Agent extends BaseModel{
 
     public function user(){
         return $this->belongsTo(User::class, 'own_user_id');
+    }
+
+    public function commissions(){
+        return $this->hasMany(AgentCommision::class, 'agent_user_id','own_user_id');
     }
 }

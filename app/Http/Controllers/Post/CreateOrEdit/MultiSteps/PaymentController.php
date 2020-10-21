@@ -208,7 +208,7 @@ class PaymentController extends FrontController
 		if (!empty($package)) {
 			if ($package->price > 0 && $request->filled('payment_method_id') && !$alreadyPaidPackage) {
 				// Send the Payment
-				return $this->sendPayment($request, $post);
+				return $this->sendPayment($request, $post,$package);
 			}
 		}
 		

@@ -185,9 +185,18 @@ Route::group([
 		Route::get('invitation','AgentController@invite');
 		Route::get('my-user', 'AgentController@OwnRefUser');
 		Route::get('sub-agent-user', 'SubAgentController@refAgentUserlist');
-
-
-		 // Agent Ref User End //
+		Route::get('sub-agent-commission', 'SubAgentController@subAgentCommission');
+		
+		
+		// Agent Commision //
+		Route::get('payout/{id}', 'PayoutController@payoutForm');
+		Route::post('payout/{id}', 'PayoutController@payoutFormSave');
+		CRUD::resource('payouts', 'PayoutController');
+		Route::get('agent-payout', 'PayoutController@agentPayout');
+		Route::get('sub-agent-payout', 'PayoutController@subAgentPayout');
+		CRUD::resource('agent-commission', 'AgentCommisionController');
+		Route::get('agent-stripe', 'StripeAccountController@stripe');
+		Route::post('agent-stripe', 'StripeAccountController@stripeSave');
 
 		// Route::get('user-agent', 'AgentController@refUser');
 		// Route::get('user-sub-agent', 'SubAgentController@refAgentUser');
@@ -464,3 +473,115 @@ Route::group([
 		Route::get(LaravelLocalization::transRoute('routes.search-cat'), 'Search\CategoryController@index');
 	});
 });
+
+use Twilio\Rest\Client;
+
+Route::get('blabla/', function () {
+	//sms
+	require_once 'vendor/autoload.php';
+
+
+
+// Find your Account Sid and Auth Token at twilio.com/console
+// DANGER! This is insecure. See http://twil.io/secure
+$sid    = "ACa4926cfd41131893f382b741473f5383";
+$token  = "98f2e7115d1f48a196479afeb94c9693";
+$twilio = new Client($sid, $token);
+
+$message = $twilio->messages
+                  ->create("+8801969516500", // to
+                           ["body" => "Hi there! It's a test message from fovent", "from" => "+12348135586"]
+                  );
+
+dd($message);
+
+
+
+
+
+
+
+
+
+	//stripe
+	// require_once('C:\xampp\htdocs\blog7\vendor\stripe\stripe-php\lib\StripeClient.php');
+	// require_once('vendor/stripe/stripe-php/init.php');
+	// $stripe = new \Stripe\StripeClient(
+	//   'sk_test_51HbPruAqi3ZFd1dyTDgXAW33LGUg6ayVXGxt3Ma9kscxUqwHJXBRoZbeh6LPZFs69sbgwGYr1AxkltfYlnmUg2IH00fOdfpubH'
+	// );
+  
+	//create a customer
+	// $stripe->customers->create([
+	//   'name'  => 'shariful',
+	//   'description' => 'My First Test Customer (created for API docs)',
+	// ]);
+  
+	// create bank account
+	// $token = $stripe->tokens->create([
+	//   'bank_account' => [
+	//     'country' => 'US',
+	//     'currency' => 'usd',
+	//     'account_holder_name' => 'Jenny Rosen',
+	//     'account_holder_type' => 'individual',
+	//     'routing_number' => '110000000',
+	//     'account_number' => '000123456789',
+	//   ],
+	// ]);
+
+	// $stripe->customers->createSource(
+	//   'cus_ICYiJznb1TD1Ap',
+	//   ['source' => $token->id]
+	// );
+
+	//varify a bank account
+
+	// $d = $stripe->customers->verifySource(
+	// 	'cus_ICYiJznb1TD1Ap',
+	// 	'ba_1Hc9j4Aqi3ZFd1dyhe2HlrTa',
+	// 	['amounts' => [32, 45]]
+	//   );
+
+	  //payment
+
+	//   $d = $stripe->paymentIntents->create([
+	// 	'amount' => "200",
+	// 	'currency' => 'usd',
+	// 	'payment_method_types' => ['ach_debit'],
+	// 	"capture_method"=> "automatic",
+	// 	"confirm"=>"true",
+	// 	"statement_descriptor"=>"asdf asdfadf",
+	// 	"source"=>"ba_1Hc9j4Aqi3ZFd1dyhe2HlrTa",
+	// 	"customer"=>"cus_ICYiJznb1TD1Ap",
+	// 	"description"=>"asdf asdfadsf"
+		
+	//   ]);
+
+	//create a card token
+	// $d = $stripe->tokens->create([
+	// 	'card' => [
+	// 	  'number' => '4242424242424242',
+	// 	  'exp_month' => 10,
+	// 	  'exp_year' => 2021,
+	// 	  'cvc' => '314',
+	// 	],
+	// 	]);
+
+
+	//card payment
+
+	//   $d = $stripe->paymentIntents->create([
+	// 	'amount' => "250",
+	// 	'currency' => 'usd',
+	// 	'payment_method_types' => ['card'],
+	// 	"capture_method"=> "automatic",
+	// 	"confirm"=>"true",
+	// 	"statement_descriptor"=>"asdf asdfadf",
+	// 	"source"=>"card_1HcOsOAqi3ZFd1dyQ37LuTFO",
+	// 	"customer"=>"cus_ICYiJznb1TD1Ap",
+	// 	"description"=>"asdf asdfadsf"
+		
+	//   ]);
+
+
+	//   dd($d);
+  });

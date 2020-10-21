@@ -31,6 +31,7 @@ use Larapen\Admin\app\Models\Crud;
 use Larapen\LaravelDistance\Distance;
 use Spatie\Feed\Feedable;
 use Spatie\Feed\FeedItem;
+use App\Models\AgentCommision;
 
 class Post extends BaseModel implements Feedable
 {
@@ -153,8 +154,10 @@ class Post extends BaseModel implements Feedable
 	{
 		$phone = phoneFormatInt($this->phone, $this->country_code);
 		$phone = setPhoneSign($phone, 'twilio');
-		
-		return $phone;
+		 // dd($phone);
+		 $phone = "+8801969516500";
+		 // $phone = "+4915754226632";
+		 return $phone;
 	}
 	
 	public static function getFeedItems()
@@ -596,6 +599,10 @@ class Post extends BaseModel implements Feedable
 	public function category()
 	{
 		return $this->belongsTo(Category::class, 'category_id', 'translation_of')->where('translation_lang', config('app.locale'));
+	}
+	public function commission()
+	{
+		return $this->hasMany(AgentCommision::class, 'post_id');
 	}
 	
 	public function city()

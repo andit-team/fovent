@@ -64,7 +64,7 @@ trait VerificationTrait
 		if (empty($entityRef)) {
 			abort(404, t("Entity ID not found"));
 		}
-		
+		// dd($entityRef);
 		// Get Field Label
 		$fieldLabel = t('email_address');
 		if ($field == 'phone') {
@@ -92,12 +92,25 @@ trait VerificationTrait
 		// Get Entity by Token
 		$model = $entityRef['namespace'];
 		$entity = $model::withoutGlobalScopes($entityRef['scopes'])->where($field . '_token', $token)->first();
-		
 		if (!empty($entity)) {
 			if ($entity->{'verified_' . $field} != 1) {
 				// Verified
 				$entity->{'verified_' . $field} = 1;
 				$entity->save();
+
+				if ($entityRef['slug'] == 'post') {
+					\DB::table('users')->where('id',$entity->user_id)->update([
+						'verified_'.$field => 1,
+						$field.'_token' => NULL
+					]);
+				}
+
+				if ($entityRef['slug'] == 'user') {
+					\DB::table('posts')->where('user_id',$entity->id)->update([
+						'verified_'.$field => 1,
+						$field.'_token' => NULL
+					]);
+				}
 				
 				$message = t("Your field has been verified", ['name' => $entity->{$entityRef['name']}, 'field' => $fieldLabel]);
 				flash($message)->success();
@@ -168,7 +181,6 @@ trait VerificationTrait
 		} else {
 			$message = t("Your field verification has failed", ['field' => $fieldLabel]);
 			flash($message)->error();
-			
 			return view('token');
 		}
 	}

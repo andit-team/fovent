@@ -66,6 +66,27 @@
 								<span class="hide-menu">My Users</span>
 							</a>
 						</li>
+
+						<li class="sidebar-item">
+							<a href="{{ admin_url('agent-commission') }}" class="sidebar-link ">
+								<i class="fa fa-user" style="font-size: 17px;" aria-hidden="true"></i>
+								<span class="hide-menu">My Commission</span>
+							</a>
+						</li>
+
+						<li class="sidebar-item">
+							<a href="{{ admin_url('payouts') }}" class="sidebar-link ">
+								<i class="fa fa-user" style="font-size: 17px;" aria-hidden="true"></i>
+								<span class="hide-menu">Payout History</span>
+							</a>
+						</li>
+
+						{{-- <li class="sidebar-item">
+							<a href="{{ admin_url('agent-stripe') }}" class="sidebar-link ">
+								<i class="fa fa-user" style="font-size: 17px;" aria-hidden="true"></i>
+								<span class="hide-menu">My stripe</span>
+							</a>
+						</li> --}}
 					@endif
 
 
@@ -101,8 +122,47 @@
 											<span class="hide-menu">{{ 'Registred Via Sub Agents' }}</span>
 										</a>
 									</li>
+									<li class="sidebar-item">
+										<a href="{{ admin_url('agent-commission?type=agent') }}" class="sidebar-link">
+											<i class="mdi mdi-adjust"></i>
+											<span class="hide-menu">{{ 'Agent Commission Earned' }}</span>
+										</a>
+									</li>
+									<li class="sidebar-item">
+										<a href="{{ admin_url('agent-commission?type=sub-agent') }}" class="sidebar-link">
+											<i class="mdi mdi-adjust"></i>
+											<span class="hide-menu">{{ 'Sub-Agent Commission Earned' }}</span>
+										</a>
+									</li>
 							</ul>
 						</li>
+
+						<li class="sidebar-item">
+							<a href="#" class="sidebar-link  has-arrow waves-effect waves-dark">
+								<i data-feather="home" class="feather-icon"></i> <span class="hide-menu">Payouts</span>
+							</a>
+							<ul aria-expanded="false" class="collapse first-level">
+								<li class="sidebar-item">
+									<a href="{{ admin_url('agent-payout') }}" class="sidebar-link">
+										<i class="mdi mdi-adjust"></i>
+										<span class="hide-menu">{{ 'Agent Payouts' }}</span>
+									</a>
+								</li>
+								<li class="sidebar-item">
+									<a href="{{ admin_url('sub-agent-payout') }}" class="sidebar-link">
+										<i class="mdi mdi-adjust"></i>
+										<span class="hide-menu">{{ 'Sub Agent Payouts' }}</span>
+									</a>
+								</li>
+								<li class="sidebar-item">
+									<a href="{{ admin_url('payouts') }}" class="sidebar-link">
+										<i class="mdi mdi-adjust"></i>
+										<span class="hide-menu">{{ 'Payment History' }}</span>
+									</a>
+								</li>
+							</ul>
+						</li>
+
 					@endif				
 					@if ( auth()->user()->can('create-sub-agent') || auth()->user()->can('list-sub-agent') )
 						<li class="sidebar-item">
@@ -120,6 +180,12 @@
 										<a href="{{ admin_url('sub-agent-user') }}" class="sidebar-link">
 											<i class="mdi mdi-adjust"></i>
 											<span class="hide-menu">{{ 'User List' }}</span>
+										</a>
+									</li>
+									<li class="sidebar-item">
+										<a href="{{ admin_url('sub-agent-commission') }}" class="sidebar-link">
+											<i class="mdi mdi-adjust"></i>
+											<span class="hide-menu">{{ 'Commission Earn' }}</span>
 										</a>
 									</li>
 							</ul>

@@ -63,8 +63,8 @@ return array(
     '9663d254ef6aa39b98709595aaf6a99e' => $vendorDir . '/pulkitjalan/geoip/helpers.php',
     '0c3c22e27afa83be19b4c938f4c6e9ea' => $vendorDir . '/spatie/laravel-backup/src/Helpers/functions.php',
     '377b22b161c09ed6e5152de788ca020a' => $vendorDir . '/spatie/laravel-permission/src/helpers.php',
-    'f6d5ca3d9d1479cb215a2846b9267b00' => $baseDir . '/app/Helpers/Functions/admin.php',
-    '6ead8877124a1e47da9827632ac6f850' => $baseDir . '/app/Helpers/Functions/core.php',
-    '907a81c3a1531aa8665a4949f8025849' => $baseDir . '/app/Helpers/Functions/plugin.php',
-    'e91a3f877a870235ca96f6b6558670a9' => $baseDir . '/app/Helpers/Functions/wordpress.php',
+    '3dc41ed95d3e6a980d4d33d7f3070f05' => $baseDir . '/app/Helpers/Functions/admin.php',
+    'a89ac7ef02b46a4259049f30597ae2e9' => $baseDir . '/app/Helpers/Functions/core.php',
+    '28bee36a3e776bad61bd8d171969ef16' => $baseDir . '/app/Helpers/Functions/plugin.php',
+    '640484360342052ee93bebbbb7b00654' => $baseDir . '/app/Helpers/Functions/wordpress.php',
 );

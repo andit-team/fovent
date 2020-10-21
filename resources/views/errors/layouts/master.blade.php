@@ -30,12 +30,12 @@
 	
 	@if (config('lang.direction') == 'rtl')
 		<link href="https://fonts.googleapis.com/css?family=Cairo|Changa" rel="stylesheet">
-		<link href="{{ url(mix('css/app.rtl.css')) }}" rel="stylesheet">
+		<link href="{{ asset(mix('css/app.rtl.css')) }}" rel="stylesheet">
 	@else
-		<link href="{{ url(mix('css/app.css')) }}" rel="stylesheet">
+		<link href="{{ asset(mix('css/app.css')) }}" rel="stylesheet">
 	@endif
 	@include('layouts.inc.tools.style')
-	<link href="{{ url('css/custom.css') . getPictureVersion() }}" rel="stylesheet">
+	<link href="{{ asset('css/custom.css') . getPictureVersion() }}" rel="stylesheet">
 	
 	@yield('after_styles')
 	
@@ -97,7 +97,7 @@
 		}
 	};
 </script>
-<script src="{{ url(mix('js/app.js')) }}"></script>
+<script src="{{ asset(mix('js/app.js')) }}"></script>
 
 @yield('after_scripts')
 

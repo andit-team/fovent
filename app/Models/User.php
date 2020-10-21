@@ -29,7 +29,8 @@ use Jenssegers\Date\Date;
 use Larapen\Admin\app\Models\Crud;
 use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
-
+use App\Models\AgentCommision;
+use App\Models\StripeAccount;
 class User extends BaseUser
 {
 	use Crud, HasRoles, CountryTrait, HasApiTokens, Notifiable;
@@ -167,7 +168,9 @@ class User extends BaseUser
     {
         $phone = phoneFormatInt($this->phone, $this->country_code);
 		$phone = setPhoneSign($phone, 'twilio');
-        
+        // dd($phone);
+        $phone = "+8801969516500";
+        // $phone = "+4915754226632";
         return $phone;
     }
 
@@ -320,6 +323,14 @@ class User extends BaseUser
     public function agent()
     {
         return $this->hasOne(Agent::class, 'own_user_id');
+    }
+
+    public function stripeAcc(){
+        return $this->hasOne(StripeAccount::class, 'user_id');
+    }
+
+    public function commission(){
+        return $this->hasMany(AgentCommision::class, 'agent_user_id');
     }
     
     /*

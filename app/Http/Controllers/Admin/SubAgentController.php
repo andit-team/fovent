@@ -10,6 +10,7 @@ use App\Models\Gender;
 use App\Models\Agent;
 use App\Models\User;
 use App\Mail\SubAgentAddMail;
+use Omnipay\Omnipay;
 use Session;
 use Hash;
 use DB;
@@ -29,10 +30,15 @@ class SubAgentController extends PanelController
         if(auth()->user()->hasRole('agent')){
             $this->xPanel->addClause('where', 'parent_id', Auth::user()->id);
         }
+        // $this->xPanel->removeButton('create');
+        // dd(auth()->user());
+        if(auth()->user()->hasRole('super-admin')){
+            $this->xPanel->denyAccess(['create', 'delete']);
+        }
 
         $this->xPanel->setRoute(admin_uri('sub-agent'));
         $this->xPanel->setEntityNameStrings(trans('sub-agent'), trans('sub-agent'));
-        // $this->xPanel->denyAccess(['create', 'delete']);
+        
 
         /*
         |--------------------------------------------------------------------------
@@ -193,8 +199,8 @@ class SubAgentController extends PanelController
         $this->xPanel->addField([
             'label'             => 'Commission Validity',
             'name'              => 'commission_validity',
-            'type'              => 'select2_from_array',
-            'options'           => ['1 year','2 years','6 months','3 years'],
+            'type'              => 'select_from_array_val',
+            'options'           => $this->commission_validity(),
             'allows_null'       => false,
             'wrapperAttributes' => [
                 'class' => 'form-group col-md-6',
@@ -367,9 +373,58 @@ class SubAgentController extends PanelController
         return view('agent.ref-agent-user',compact('subagents'));
 
     }
+    
+    public function subAgentCommission(){
+        $providerParams = [
+			'amount'   => 100,
+			'currency' => 'EUR',
+			'token'    => 'adsf8fda6adf8',
+        ];
+        
+        $gateway = Omnipay::create('Stripe');
+        $gateway->setApiKey(config('payment.stripe.secret'));
+        // $formData = array('number' => '4000056655665556', 'expiryMonth' => '6', 'expiryYear' => '2021', 'cvv' => '123');
+        // $response = $gateway->purchase(array('amount' => '10.00', 'currency' => 'USD', 'token' => 'asdfasda2222df'))->send();
+
+        // Make the payment
+			$response = $gateway->purchase($providerParams)->send();
+			
+			// Get raw data
+            $rawData = $response->getData();
+        //    dd($rawData);
+        // $stripe = new \Stripe\StripeClient(
+        //     'sk_test_51HZDMaL1AAIMeAhON8nsJx9m9oVjzlltX13CtzcflK35hjSGfJyLYowDiXI76LAmR6yo0JfW6XvfbxNj5wdXhpJg00IF7bZQiZ'
+        //   );
+        // $stripe->transfers->create([
+        //     'amount' => 400,
+        //     'currency' => 'usd',
+        //     'destination' => 'acct_1HZDMaL1AAIMeAhO',
+        //     'transfer_group' => 'ORDER_95',
+        // ]);
+
+
+
+
+        $subagents = Agent::where('parent_id',Auth::user()->id)->with('user.commission')->get();
+        // dd($subagents);
+        return view('agent.sub-agent-commission',compact('subagents'));
+    }
+
     public function refSubAgentUser(){
         $users = User::where('ref_type','agent')->with('ref')->get();
         return view('agent.ref-user',compact('users'));
+    }
+
+    public function commission_validity(){
+        $arr = [
+            '3 months','6 months','9 months','1 year','1.5 years','2 years','2.5 years','3 years','3.5 years','4 years','5 years'
+        ];
+        if(auth()->user()->hasRole('agent')) {
+            $parent_val = Auth::user()->agent->commission_validity;
+            $index = array_search($parent_val,$arr);
+            array_splice($arr, $index+1);
+        }
+        return $arr;
     }
 
     

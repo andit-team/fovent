@@ -47,7 +47,7 @@ trait PhoneVerificationTrait
 		}
 		
 		// Send Confirmation Email
-		try {
+		// try {
 			if (request()->filled('locale')) {
 				$locale = (array_key_exists(request()->get('locale'), LaravelLocalization::getSupportedLocales()))
 					? request()->get('locale')
@@ -66,17 +66,17 @@ trait PhoneVerificationTrait
 				$message = t("An activation code has been sent to you to verify your phone number");
 				flash($message)->success();
 			}
-			
+			// dd($entity);
 			session(['verificationSmsSent' => true]);
 			
 			return true;
-		} catch (\Exception $e) {
-			if (isFromAdminPanel()) {
-				Alert::error($e->getMessage())->flash();
-			} else {
-				flash($e->getMessage())->error();
-			}
-		}
+		// } catch (\Exception $e) {
+		// 	if (isFromAdminPanel()) {
+		// 		Alert::error($e->getMessage())->flash();
+		// 	} else {
+		// 		flash($e->getMessage())->error();
+		// 	}
+		// }
 		
 		return false;
 	}

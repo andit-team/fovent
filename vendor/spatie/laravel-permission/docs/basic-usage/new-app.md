@@ -130,7 +130,7 @@ Super-Admins are a common feature. Using the following approach allows that when
 
 +        // Implicitly grant "Super Admin" role all permission checks using can()
 +        Gate::before(function ($user, $ability) {
-+            if ($user->hasRole('Super-Admin')) {
++            if ($user->hasRole('super-admin')) {
 +                return true;
 +            }
 +        });

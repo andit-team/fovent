@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 // use App\Http\Controllers\Controller;
-// use Illuminate\Http\Request;
+use Illuminate\Http\Request;
 // use App\Models\User;
 
 use Larapen\Admin\app\Http\Controllers\PanelController;
@@ -197,8 +197,8 @@ class AgentController extends PanelController {
         $this->xPanel->addField([
             'label'             => 'Commission Validity',
             'name'              => 'commission_validity',
-            'type'              => 'select2_from_array',
-            'options'           => ['1 year','2 years','6 months','3 years'],
+            'type'              => 'select_from_array_val',
+            'options'           => ['3 months','6 months','9 months','1 year','1.5 years','2 years','2.5 years','3 years','3.5 years','4 years','5 years'],
             'allows_null'       => false,
             'wrapperAttributes' => [
                 'class' => 'form-group col-md-6',
@@ -357,6 +357,10 @@ class AgentController extends PanelController {
         }
         return view('agent.ref-user',compact('users'));
     }
+
+   
+
+
     public function invite(){
         // $value = 'something from not somewhere';
         // setcookie("TestCookie", $value, time()+3600); //set cookies

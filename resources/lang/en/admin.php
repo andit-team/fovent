@@ -9,6 +9,7 @@ return [
 	*/
 	'agent'          => 'Agent',
 	'sub-agent'          => 'Sub Agent',
+	'Tax Percent'          => 'Tax Percent',
 
 
     /*

@@ -20,7 +20,9 @@ use App\Helpers\UrlGen;
 use App\Http\Controllers\Auth\Traits\VerificationTrait;
 use App\Http\Controllers\Post\CreateOrEdit\Traits\AutoRegistrationTrait;
 use App\Http\Controllers\Post\Traits\CustomFieldTrait;
+use App\Http\Controllers\Traits\CommissionTrait;
 use App\Http\Requests\PostRequest;
+use App\Models\AgentCommision;
 use App\Models\Permission;
 use App\Models\Post;
 use App\Models\PostType;
@@ -43,7 +45,7 @@ use App\Http\Controllers\Post\CreateOrEdit\MultiSteps\Traits\EditTrait;
 
 class CreateController extends FrontController
 {
-	use EditTrait, VerificationTrait, CustomFieldTrait, AutoRegistrationTrait;
+	use EditTrait, VerificationTrait, CustomFieldTrait, AutoRegistrationTrait,CommissionTrait;
 	
 	public $data;
 	
@@ -202,8 +204,14 @@ class CreateController extends FrontController
 		}
 		
 		// Save
-		$post->save();
+		 $post->save();
 		
+		if(auth()->user()){
+			if(auth()->user()->ref_id != NULL){
+				$this->commissionAdd(auth()->user(),$post);
+			}
+		}
+
 		// Save ad Id in session (for next steps)
 		session(['tmpPostId' => $post->id]);
 		
@@ -211,7 +219,8 @@ class CreateController extends FrontController
 		$this->createPostFieldsValues($post, $request);
 		
 		// Auto-Register the Author
-		$user = $this->register($post);
+		// 1 means auto save with commission table
+		$user = $this->register($post,1);
 		
 		// The Post's creation message
 		if (getSegment(2) == 'create') {

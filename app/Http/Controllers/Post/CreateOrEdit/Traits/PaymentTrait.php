@@ -16,14 +16,17 @@
 namespace App\Http\Controllers\Post\CreateOrEdit\Traits;
 
 use App\Models\PaymentMethod;
+use App\Models\AgentCommision;
 use App\Models\Scopes\VerifiedScope;
 use App\Models\Scopes\ReviewedScope;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Traits\CommissionTrait;
 
 trait PaymentTrait
 {
+	use CommissionTrait;
 	/**
 	 * Send Payment
 	 *
@@ -31,7 +34,7 @@ trait PaymentTrait
 	 * @param Post $post
 	 * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
 	 */
-	public function sendPayment(Request $request, Post $post)
+	public function sendPayment(Request $request, Post $post,$package=NULL)
 	{
 		// Set URLs
 		$this->uri['previousUrl'] = str_replace(['#entryToken', '#entryId'], [$post->tmp_token, $post->id], $this->uri['previousUrl']);
@@ -47,6 +50,11 @@ trait PaymentTrait
 			if (!empty($plugin)) {
 				// Send the Payment
 				try {
+
+					if($post->commission){
+						$this->commissionUpdate($post->commission,$package);
+					}
+
 					return call_user_func($plugin->class . '::sendPayment', $request, $post);
 				} catch (\Exception $e) {
 					flash($e->getMessage())->error();
