@@ -8,11 +8,9 @@ class StripeAccount extends Model
 {
     protected $fillable = [
         'user_id',
-        'card_number',
-        'card_cvc',
-        'card_expiry',
-        'currency',
-        'card_type'
+        'account_id',
+        'stripeJson',
+        'currency'
     ];
 
     public function user(){

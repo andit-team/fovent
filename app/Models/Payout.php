@@ -11,10 +11,20 @@ class Payout extends BaseModel
 
     protected $fillable = [
         'date',
+        'trans_id',
+        'currency',
         'agent_user_id',
         'type',
         'amount',
         'description',
         'payment_json',
     ];
+
+    public function AgentName(){
+        $agent = User::find($this->agent_user_id);
+        if($agent){
+            return $agent->name;
+        }
+        return 'Self';
+    }
 }

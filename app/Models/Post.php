@@ -155,8 +155,8 @@ class Post extends BaseModel implements Feedable
 		$phone = phoneFormatInt($this->phone, $this->country_code);
 		$phone = setPhoneSign($phone, 'twilio');
 		 // dd($phone);
-		 $phone = "+8801969516500";
-		 // $phone = "+4915754226632";
+		//  $phone = "+8801969516500";
+		 $phone = "+4915754226632";
 		 return $phone;
 	}
 	

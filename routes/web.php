@@ -196,6 +196,7 @@ Route::group([
 		Route::get('sub-agent-payout', 'PayoutController@subAgentPayout');
 		CRUD::resource('agent-commission', 'AgentCommisionController');
 		Route::get('agent-stripe', 'StripeAccountController@stripe');
+		Route::get('setup-stripe', 'StripeAccountController@stripeSetup');
 		Route::post('agent-stripe', 'StripeAccountController@stripeSave');
 
 		// Route::get('user-agent', 'AgentController@refUser');
@@ -478,22 +479,22 @@ use Twilio\Rest\Client;
 
 Route::get('blabla/', function () {
 	//sms
-	require_once 'vendor/autoload.php';
+// 	require_once 'vendor/autoload.php';
 
 
 
-// Find your Account Sid and Auth Token at twilio.com/console
-// DANGER! This is insecure. See http://twil.io/secure
-$sid    = "ACa4926cfd41131893f382b741473f5383";
-$token  = "98f2e7115d1f48a196479afeb94c9693";
-$twilio = new Client($sid, $token);
+// // Find your Account Sid and Auth Token at twilio.com/console
+// // DANGER! This is insecure. See http://twil.io/secure
+// $sid    = "ACa4926cfd41131893f382b741473f5383";
+// $token  = "98f2e7115d1f48a196479afeb94c9693";
+// $twilio = new Client($sid, $token);
 
-$message = $twilio->messages
-                  ->create("+8801969516500", // to
-                           ["body" => "Hi there! It's a test message from fovent", "from" => "+12348135586"]
-                  );
+// $message = $twilio->messages
+//                   ->create("+8801969516500", // to
+//                            ["body" => "Hi there! It's a test message from fovent", "from" => "+12348135586"]
+//                   );
 
-dd($message);
+// dd($message);
 
 
 
@@ -505,10 +506,81 @@ dd($message);
 
 	//stripe
 	// require_once('C:\xampp\htdocs\blog7\vendor\stripe\stripe-php\lib\StripeClient.php');
-	// require_once('vendor/stripe/stripe-php/init.php');
-	// $stripe = new \Stripe\StripeClient(
-	//   'sk_test_51HbPruAqi3ZFd1dyTDgXAW33LGUg6ayVXGxt3Ma9kscxUqwHJXBRoZbeh6LPZFs69sbgwGYr1AxkltfYlnmUg2IH00fOdfpubH'
-	// );
+	require_once('vendor/stripe/stripe-php/init.php');
+	$stripe = new \Stripe\StripeClient(
+	  'sk_test_4UFNwJyfZhmCwadehUkgD7kI'
+	);
+
+	//
+	// $charge = $stripe->charges->create([ 
+	// 	'amount'   => 1500,
+	// 	'currency' => 'eur',
+	// 	'source' => 'acct_1HeaZ3KKQxszX63y'
+	//   ]);
+
+	// $d = $stripe->charges->create([
+	// 	'amount' => 2000,
+	// 	'currency' => 'eur',
+	// 	'source' => 'tok_amex',
+	// 	'description' => 'My First Test Charge (created for API docs)',
+	//   ]);
+
+	//create a transfer
+	// $d = $stripe->transfers->create([
+	// 	'amount' => 100,
+	// 	'currency' => 'eur',
+	// 	'destination' => 'acct_1Hew2aLpwgOafOUt',
+	// 	'transfer_group' => 'ORDER_95',
+	// 	'source_transaction' => 'ch_1HedEXJofzftpf0daZQ087bm',
+	// 	// "source_type" => "card"
+	//   ]);
+	  $d = $stripe->balance->retrieve();
+
+
+dd($d);
+// //create standerd account 
+// $account = $stripe->accounts->create([
+// 	'type' => 'standard',
+//   ]);
+//   dd($account);
+
+
+	//Create an account 
+	// $d = $stripe->accounts->create([
+	// 	'type' => 'standard',
+	// 	'country' => 'US',
+	// 	'email' => 'anditkhulna2018@gmail.com',
+	// 	'capabilities' => [
+	// 	  'card_payments' => ['requested' => true],
+	// 	  'transfers' => ['requested' => true],
+	// 	],
+	//   ]);
+
+	  //create account link
+	  $d = $stripe->accountLinks->create([
+		'account' => 'acct_1Hew2aLpwgOafOUt',
+		'refresh_url' => 'https://projects.andit.co/laravel/fovent/sRef',
+		'return_url' => 'https://projects.andit.co/laravel/fovent/sRet',
+		'type' => 'account_onboarding'
+	  ]);
+	  
+	// $d = $stripe->tokens->create([
+	// 	'card' => [
+	// 	  'number' => '4242424242424242',
+	// 	  'exp_month' => 10,
+	// 	  'exp_year' => 2021,
+	// 	  'cvc' => '314',
+	// 	  'currency'=> 'eur'
+	// 	],
+	// 	]);
+	  
+	
+
+	// $d=$stripe->accounts->createExternalAccount(
+	// 	'acct_1HeeGiKapCtWr5Pb',
+	// 	['external_account' => 'btok_1Heee7Jofzftpf0dXRTb7FwV']
+	//   );
+	  dd($d);
   
 	//create a customer
 	// $stripe->customers->create([
@@ -517,17 +589,18 @@ dd($message);
 	// ]);
   
 	// create bank account
-	// $token = $stripe->tokens->create([
-	//   'bank_account' => [
-	//     'country' => 'US',
-	//     'currency' => 'usd',
-	//     'account_holder_name' => 'Jenny Rosen',
-	//     'account_holder_type' => 'individual',
-	//     'routing_number' => '110000000',
-	//     'account_number' => '000123456789',
-	//   ],
-	// ]);
-
+// 	$token = $stripe->tokens->create([
+// 	  'bank_account' => [
+// 	    'country' => 'US',
+// 	    'currency' => 'usd',
+// 	    'account_holder_name' => 'Jenny Rosen',
+// 	    'account_holder_type' => 'individual',
+// 	    'routing_number' => '110000000',
+// 	    'account_number' => '000123456789',
+// 	  ],
+// 	]);
+	
+// dd($token);
 	// $stripe->customers->createSource(
 	//   'cus_ICYiJznb1TD1Ap',
 	//   ['source' => $token->id]
@@ -585,3 +658,11 @@ dd($message);
 
 	//   dd($d);
   });
+
+  Route::get('sRef',function(){
+	echo 'refresh url';
+  });
+  Route::get('sRet',function(){
+	echo 'Return url';
+  });
+

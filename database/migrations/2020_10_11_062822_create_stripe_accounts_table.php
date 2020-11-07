@@ -16,11 +16,9 @@ class CreateStripeAccountsTable extends Migration
         Schema::create('stripe_accounts', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->string('card_number');
-            $table->string('card_cvc');
-            $table->string('card_expiry');
+            $table->string('account_id');
+            $table->string('stripeJson');
             $table->string('currency');
-            $table->enum('card_type',['stripe','paypal'])->default('stripe');
             $table->timestamps();
         });
     }

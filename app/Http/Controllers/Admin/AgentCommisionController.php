@@ -36,6 +36,8 @@ class AgentCommisionController extends PanelController
             $this->xPanel->addClause('where', 'agent_user_id', auth()->user()->id);
         }
 
+        // $this->xPanel->addClause('where', 'agent_user_id', auth()->user()->id);
+
         $this->xPanel->addFilter([
 			'name'  => 'from_to',
 			'type'  => 'date_range',
@@ -74,6 +76,10 @@ class AgentCommisionController extends PanelController
             'label' => "Currency",
         ]);
 
+        $this->xPanel->addColumn([
+            'name'  => 'status',
+            'label' => "Status",
+        ]);
         $this->xPanel->addColumn([
             'name'  => 'description',
             'label' => "Description",

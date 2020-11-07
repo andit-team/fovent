@@ -8,15 +8,41 @@ use App\Models\Currency;
 use Session;
 class StripeAccountController extends PanelController
 {
+    // public $stripe;
+    // public function __construct(){
+    //     require_once('vendor/stripe/stripe-php/init.php');
+    //     $stripe = new \Stripe\StripeClient(
+    //         getenv("STRIPE_SECRET")
+    //     );
+    // }
+
+    public function stripeConfig(){
+        require_once('vendor/stripe/stripe-php/init.php');
+        $stripe = new \Stripe\StripeClient(
+            getenv("STRIPE_SECRET")
+        );
+        return $stripe;
+    }
     //stripe account setup
     public function stripe(){
-        $currencies = Currency::all();
+        // $currencies = Currency::all();
+        $stripe = $this->stripeConfig();
         $account = '';
         if(auth()->user()->StripeAcc){
-            $account = auth()->user()->StripeAcc;
+            // $account = auth()->user()->StripeAcc;
+            $account = $stripe->accounts->retrieve(
+                auth()->user()->StripeAcc->account_id,
+                []
+              );
         }
-        return view('agent.stripe-setup',compact('account','currencies'));
+        // dd($account);
+        if($account){
+            return view('agent.stripe-setup-continue',compact('account'));
+        }
+        // dd($account->requirements->eventually_due);
+        return view('agent.stripe-setup');
     }
+
     public function stripeSave(Request $request){
         $account = new StripeAccount;
         if(auth()->user()->StripeAcc){
@@ -34,5 +60,36 @@ class StripeAccountController extends PanelController
         Session::flash('success', 'Stripe Account Added Successfully');
 
         return redirect('admin/agent-stripe');
+    }
+
+    public function stripeSetup(){
+        $stripe = $this->stripeConfig();
+        // dd($stripe);
+          if(auth()->user()->StripeAcc){
+            $account = $stripe->accounts->retrieve(
+                auth()->user()->StripeAcc->account_id,
+                []
+              );
+          }else{
+            $account = $stripe->accounts->create([
+                'type' => 'standard',
+            ]);
+            StripeAccount::create([
+                'user_id'       => auth()->user()->id,
+                'account_id'    => $account->id
+            ]);
+          }
+
+
+        $link = $stripe->accountLinks->create([
+            'account' => $account->id,
+            'refresh_url' => admin_url('agent-stripe'),
+            'return_url' => admin_url('agent-stripe'),
+            'type' => 'account_onboarding'
+        ]);
+
+        return redirect($link->url);
+    
+        // echo 'asdf';
     }
 }

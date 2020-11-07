@@ -15,6 +15,7 @@
         </ol>
     </div>
 </div>
+@include('post.inc.notification')
 <div class="row">
     <div class="col-sm-4">
         <div class="card rounded">
@@ -46,7 +47,7 @@
                 </table>
             </div>
         </div>
-        {{-- <div class="card rounded">
+        <div class="card rounded">
             <div class="card-header">
                 <h3>Card Information</h3>
             </div>  
@@ -54,36 +55,16 @@
                 @if($agent->user->stripeAcc)
                 <table class="table table-striped">
                     <tr>
-                        <th width="150">Payment Method</th>
+                        <th width="150">Stripe Account</th>
                         <td width="5">:</td>
-                        <td>{{$agent->user->stripeAcc->card_type}}</td>
-                    </tr>
-                    <tr>
-                        <th width="150">Card Number</th>
-                        <td width="5">:</td>
-                        <td>{{$agent->user->stripeAcc->card_number}}</td>
-                    </tr>
-                    <tr>
-                        <th width="150">Card Cvc</th>
-                        <td width="5">:</td>
-                        <td>{{$agent->user->stripeAcc->card_cvc}}</td>
-                    </tr>
-                    <tr>
-                        <th width="150">Card Expiry</th>
-                        <td width="5">:</td>
-                        <td>{{$agent->user->stripeAcc->card_expiry}}</td>
-                    </tr>
-                    <tr>
-                        <th width="150">Currency</th>
-                        <td width="5">:</td>
-                        <td>{{$agent->user->stripeAcc->currency}}</td>
+                        <td>{{$agent->user->stripeAcc->account_id}}</td>
                     </tr>
                 </table>
                 @else
-                    <h4>No Card hass been setup yet. You can't send money ... :(</h4>
+                    <h4>No stripe account has been setup yet. You can't send money ... :(</h4>
                 @endif
             </div>
-        </div> --}}
+        </div>
     </div>
     <div class="col-sm-8">
         <div class="card rounded">
@@ -91,7 +72,7 @@
                 <h3>Payout Information</h3>
             </div>  
             <div class="card-body">
-                <form action="{{admin_url('payouts')}}/{{$agent->id}}" method="post" id="sendPayment">
+                <form action="{{admin_url('payout')}}/{{$agent->id}}" method="post" id="sendPayment">
                     @csrf
                     {{-- <input type="hidden" name="stripeToken" id="stripeToken" value=""> --}}
                     <input type="hidden" name="currency" id="currency" value="">
@@ -123,7 +104,9 @@
             </div>
             <div class="card-footer">
                 {{-- @if($agent->user->stripeAcc) --}}
-                    <button class="btn btn-primary" id="submitForm">Click to Pay</button>
+                    <button class="btn btn-primary
+                        {{$account && $account->details_submitted ? '' : 'disabled pointNone'}}
+                    " id="submitForm">Click to Pay</button>
                 {{--@else 
                      <button class="btn btn-primary disabled" title="First add to payment card">Click to Pay</button> --}}
                 {{-- @endif --}}
@@ -133,6 +116,11 @@
 </div>
 
 @section('after_styles')
+<style>
+    .pointNone {
+        pointer-events: none;
+    }
+</style>
 @endsection
 
 
@@ -153,49 +141,26 @@
                 });
                 $('#totalAmount').val(parseFloat(total).toFixed(2));
             });
-            $('#submitForm').click(function(e){
-                if(confirm("Are you sure?")){
-                    $('#sendPayment').submit();
-                }
-            });
+            // $('#submitForm').click(function(e){
+            //     if(confirm("Are you sure?")){
+            //         $('#sendPayment').submit();
+            //     }
+            // });
         });
         
-    </script>
+  
 
-            {{-- //submitForm
-            // @if($agent->user->stripeAcc)
-            //     $('#submitForm').click(function(e){
-            //         if(confirm("Are you sure?")){
-            //             var PublishableKey = '{!! config('payment.stripe.key') !!}'; /* Replace with your API publishable key */
-            //             Stripe.setPublishableKey(PublishableKey);
-            //             var ccData = {
-            //                             number: '4000056655665556',
-            //                             cvc: {{$agent->user->stripeAcc->card_cvc}},
-            //                             exp_month: {{rtrim(explode('/',$agent->user->stripeAcc->card_expiry)[0])}},
-            //                             exp_year: {{ltrim(explode('/',$agent->user->stripeAcc->card_expiry)[1])}}
-            //                         };
-
-            //             //create token
-            //             Stripe.card.createToken(ccData, function stripeResponseHandler(status, response){
-            //                 if (response.error){
-            //                     alert(response.error.message);
-            //                 }else{
-            //                     $(this).html('{{ trans('stripe::messages.Processing') }} <i class="fa fa-spinner fa-pulse"></i>');
-            //                     var stripeToken = response.id;
-            //                     // console.log(stripeToken);
-            //                     // $('#stripeToken').val(stripeToken)
-            //                     // $('#currency').val('{{$agent->user->stripeAcc->currency}}')
-            //                     /* and submit */
-            //                     // $form.submit();
-            //                     // $('#sendPayment').submit();
-            //                 }
-            //             });
-            //         }else{
-            //             e.preventDefault();
-            //         }
-            //     });
-            // @endif --}}
-       
+            //submitForm
+             @if($agent->user->stripeAcc)
+                 $('#submitForm').click(function(e){
+                     if(confirm("Are you sure?")){
+                        $('#sendPayment').submit();
+                     }else{
+                         e.preventDefault();
+                     }
+                 });
+             @endif
+            </script>
  
 
 @endsection

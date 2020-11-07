@@ -81,12 +81,12 @@
 							</a>
 						</li>
 
-						{{-- <li class="sidebar-item">
+						<li class="sidebar-item">
 							<a href="{{ admin_url('agent-stripe') }}" class="sidebar-link ">
 								<i class="fa fa-user" style="font-size: 17px;" aria-hidden="true"></i>
 								<span class="hide-menu">My stripe</span>
 							</a>
-						</li> --}}
+						</li>
 					@endif
 
 
