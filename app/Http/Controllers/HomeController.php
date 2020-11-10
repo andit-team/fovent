@@ -14,7 +14,8 @@
  */
 
 namespace App\Http\Controllers;
-
+use App\Helpers\Ip;
+use Illuminate\Support\Facades\Http;
 use App\Helpers\ArrayHelper;
 use App\Models\Post;
 use App\Models\Category;
@@ -35,8 +36,11 @@ class HomeController extends FrontController
 	 */
 	public function __construct()
 	{
+
 		parent::__construct();
 		
+		
+
 		// Check Country URL for SEO
 		$countries = CountryLocalizationHelper::transAll(CountryLocalization::getCountries());
 		view()->share('countries', $countries);
@@ -52,9 +56,29 @@ class HomeController extends FrontController
 			setcookie("_ref", $request->_ref, strtotime( '+30 days' )); //set cookies
 		}
 
+		// if(config('settings.geo_location.auto_detection')){
+		// 	$ip =  App\Helpers\Ip::get();
+		// 	$ip =  $ip == '::1' ? '27.147.160.253' : $ip;
+		// 	$response = Illuminate\Support\Facades\Http::get("https://api.ip2location.com/v2/?ip={$ip}&key=4QIO9IEFNT&package=WS24&format=json&addon=continent,country,region,city,geotargeting,country_groupings,time_zone_info&lang=zh-cn");
+		// 	// dd($response->body());
+		// 	if($response->body()){
+		// 		$config = config('settings.geo_location');
+		// 		$ipInfo = json_decode($response->body());
+		// 		$languageCode = $ipInfo->country->language->code;
+		// 		$country = App\Models\Country::where('active',1)->where('code', $ipInfo->country_code)->first();
+		// 		if($country){
+		// 			$config['default_country_code'] = $country->code;
+		// 			$data = App\Models\Setting::where('id',8)->first();
+		// 			$data->value = json_encode($config);
+		// 			$data->save();
+		// 		}
+		// 	}
+		// }
+
+
 		$data = [];
 		$countryCode = config('country.code');
-		
+		// dd($countryCode);
 		// Get all homepage sections
 		$cacheId = $countryCode . '.homeSections';
 		$data['sections'] = Cache::remember($cacheId, $this->cacheExpiration, function () use ($countryCode) {

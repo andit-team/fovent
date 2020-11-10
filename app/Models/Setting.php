@@ -1593,6 +1593,7 @@ class Setting extends BaseModel
 	{"name":"default_country_code","label":"Default Country","type":"select2","attribute":"asciiname","model":"\\\App\\\Models\\\Country","allows_null":"true","wrapperAttributes":{"class":"form-group col-md-6"}},
 	{"name":"separator_clear_1","type":"custom_html","value":"<div style=\"clear: both;\"></div>"},
 	{"name":"country_flag_activation","label":"Show country flag on top","type":"checkbox","hint":"<br>","wrapperAttributes":{"class":"form-group col-md-6"}},
+	{"name":"auto_detection","label":"Auto_Detection_Country","type":"checkbox","hint":"<br>","wrapperAttributes":{"class":"form-group col-md-6"}},
 	{"name":"local_currency_packages_activation","label":"Allow users to pay the Packages in their country currency","type":"checkbox","hint":"package_currency_by_country_hint","wrapperAttributes":{"class":"form-group col-md-6"}}';
 		}
 		

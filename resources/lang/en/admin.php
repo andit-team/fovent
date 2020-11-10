@@ -10,6 +10,7 @@ return [
 	'agent'          => 'Agent',
 	'sub-agent'          => 'Sub Agent',
 	'Tax Percent'          => 'Tax Percent',
+	'Auto_Detection_Country'          => 'Auto Detection Country',
 
 
     /*

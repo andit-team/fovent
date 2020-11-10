@@ -475,7 +475,7 @@ Route::group([
 	});
 });
 
-use Twilio\Rest\Client;
+// use Twilio\Rest\Client;
 
 Route::get('blabla/', function () {
 	//sms
@@ -506,10 +506,10 @@ Route::get('blabla/', function () {
 
 	//stripe
 	// require_once('C:\xampp\htdocs\blog7\vendor\stripe\stripe-php\lib\StripeClient.php');
-	require_once('vendor/stripe/stripe-php/init.php');
-	$stripe = new \Stripe\StripeClient(
-	  'sk_test_4UFNwJyfZhmCwadehUkgD7kI'
-	);
+	// require_once('vendor/stripe/stripe-php/init.php');
+	// $stripe = new \Stripe\StripeClient(
+	//   'sk_test_4UFNwJyfZhmCwadehUkgD7kI'
+	// );
 
 	//
 	// $charge = $stripe->charges->create([ 
@@ -534,10 +534,10 @@ Route::get('blabla/', function () {
 	// 	'source_transaction' => 'ch_1HedEXJofzftpf0daZQ087bm',
 	// 	// "source_type" => "card"
 	//   ]);
-	  $d = $stripe->balance->retrieve();
+// 	  $d = $stripe->balance->retrieve();
 
 
-dd($d);
+// dd($d);
 // //create standerd account 
 // $account = $stripe->accounts->create([
 // 	'type' => 'standard',
@@ -557,12 +557,12 @@ dd($d);
 	//   ]);
 
 	  //create account link
-	  $d = $stripe->accountLinks->create([
-		'account' => 'acct_1Hew2aLpwgOafOUt',
-		'refresh_url' => 'https://projects.andit.co/laravel/fovent/sRef',
-		'return_url' => 'https://projects.andit.co/laravel/fovent/sRet',
-		'type' => 'account_onboarding'
-	  ]);
+	//   $d = $stripe->accountLinks->create([
+	// 	'account' => 'acct_1Hew2aLpwgOafOUt',
+	// 	'refresh_url' => 'https://projects.andit.co/laravel/fovent/sRef',
+	// 	'return_url' => 'https://projects.andit.co/laravel/fovent/sRet',
+	// 	'type' => 'account_onboarding'
+	//   ]);
 	  
 	// $d = $stripe->tokens->create([
 	// 	'card' => [
@@ -580,7 +580,7 @@ dd($d);
 	// 	'acct_1HeeGiKapCtWr5Pb',
 	// 	['external_account' => 'btok_1Heee7Jofzftpf0dXRTb7FwV']
 	//   );
-	  dd($d);
+	//   dd($d);
   
 	//create a customer
 	// $stripe->customers->create([
@@ -659,10 +659,10 @@ dd($d);
 	//   dd($d);
   });
 
-  Route::get('sRef',function(){
-	echo 'refresh url';
-  });
-  Route::get('sRet',function(){
-	echo 'Return url';
-  });
+//   Route::get('sRef',function(){
+// 	echo 'refresh url';
+//   });
+//   Route::get('sRet',function(){
+// 	echo 'Return url';
+//   });
 

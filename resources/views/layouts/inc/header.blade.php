@@ -46,22 +46,14 @@ if (getSegment(1) != trans('routes.countries')) {
 						<path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"></path>
 					</svg>
 				</button>
-				{{-- Country Flag (Mobile) --}}
-				@if (getSegment(1) != trans('routes.countries'))
-					@if (isset($multiCountriesIsEnabled) and $multiCountriesIsEnabled)
-						@if (!empty(config('country.icode')))
-							@if (file_exists(public_path() . '/images/flags/24/' . config('country.icode') . '.png'))
-								<button class="flag-menu country-flag d-block d-md-none btn btn-secondary hidden pull-right" href="#selectCountry" data-toggle="modal">
-									<img src="{{ url('images/flags/24/' . config('country.icode') . '.png') . getPictureVersion() }}"
-										 alt="{{ config('country.name') }}"
-										 style="float: left;"
-									>
-									<span class="caret hidden-xs"></span>
-								</button>
-							@endif
-						@endif
-					@endif
-				@endif
+
+				<button class="flag-menu country-flag d-block d-md-none btn btn-secondary hidden pull-right" href="#categoriesModal" data-toggle="modal">
+					Categories
+					<span class="caret hidden-xs"></span>
+				</button>
+				
+				
+				
 			</div>
 			
 			<div class="navbar-collapse collapse">
@@ -170,7 +162,11 @@ if (getSegment(1) != trans('routes.countries')) {
 						@endif
 					</li>
 					
-					@include('layouts.inc.menu.select-language')
+					{{-- @include('layouts.inc.menu.select-language') --}}
+
+					@php $data = ['lan' => '/en/'.strtolower($languageCode)] @endphp
+					@include('layouts.inc.google_translate',$data)
+					
 					
 				</ul>
 			</div>

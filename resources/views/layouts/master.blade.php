@@ -14,6 +14,7 @@
 <?php
 	$rawFullUrl = url(\Illuminate\Support\Facades\Request::getRequestUri());
 	$fullUrl = rawurldecode($rawFullUrl);
+	$languageCode = 'en';
 	$plugins = array_keys((array)config('plugins'));
 	$publicDisk = \Storage::disk(config('filesystems.default'));
 ?>
@@ -152,6 +153,8 @@
 			@endif
 		@endif
 	@show
+
+		
 </head>
 <body class="{{ config('app.skin') }}">
 <div id="wrapper">
@@ -200,6 +203,7 @@
 
 @includeWhen(!auth()->check(), 'layouts.inc.modal.login')
 @include('layouts.inc.modal.change-country')
+@include('layouts.inc.modal.categories')
 @include('cookieConsent::index')
 
 @if (config('plugins.detectadsblocker.installed'))
@@ -207,6 +211,11 @@
 		@include('detectadsblocker::modal')
 	@endif
 @endif
+
+{{-- <div id="google_translate_element"></div> --}}
+
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 <script>
 	{{-- Init. Root Vars --}}
