@@ -66,11 +66,7 @@ trait AutoRegistrationTrait
 		
 		// Generate random password
 		$randomPassword = getRandomPassword(8);
-		$ip =  Ip::get();
-		$ip =  $ip == '::1' ? '27.147.160.253' : $ip;
-		$response = Http::get("https://api.ip2location.com/v2/?ip={$ip}&key=XZP1EPBNC0&package=WS24");
-
-		$user->ip_info = $response->body();
+		$user->ip_info = Ip::getIpInformation();
 		$user->country_code   = config('country.code');
 		$user->language_code  = config('app.locale');
 		$user->name           = $post->contact_name;

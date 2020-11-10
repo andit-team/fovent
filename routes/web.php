@@ -477,8 +477,8 @@ Route::group([
 
 // use Twilio\Rest\Client;
 
-Route::get('blabla/', function () {
-	//sms
+// Route::get('blabla/', function () {
+// 	//sms
 // 	require_once 'vendor/autoload.php';
 
 
@@ -486,7 +486,7 @@ Route::get('blabla/', function () {
 // // Find your Account Sid and Auth Token at twilio.com/console
 // // DANGER! This is insecure. See http://twil.io/secure
 // $sid    = "ACa4926cfd41131893f382b741473f5383";
-// $token  = "98f2e7115d1f48a196479afeb94c9693";
+// $token  = "43826c81ec79f68f21ab566de425b22a";
 // $twilio = new Client($sid, $token);
 
 // $message = $twilio->messages
@@ -657,7 +657,7 @@ Route::get('blabla/', function () {
 
 
 	//   dd($d);
-  });
+//   });
 
 //   Route::get('sRef',function(){
 // 	echo 'refresh url';

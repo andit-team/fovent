@@ -32,6 +32,9 @@ class AgentCommisionController extends PanelController
         if(isset($_GET['type'])){
             $this->xPanel->addClause('where', 'agent_type', $_GET['type']);
         }
+        // if(isset($_GET['type'])){
+            $this->xPanel->addClause('where', 'commision','>', 0);
+        // }
         if(auth()->user()->hasRole('agent') || auth()->user()->hasRole('sub-agent')){
             $this->xPanel->addClause('where', 'agent_user_id', auth()->user()->id);
         }

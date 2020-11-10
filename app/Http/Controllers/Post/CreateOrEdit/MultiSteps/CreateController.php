@@ -171,7 +171,8 @@ class CreateController extends FrontController
 			$emailVerificationRequired = config('settings.mail.email_verification') == 1 && $request->filled('email');
 			$phoneVerificationRequired = config('settings.sms.phone_verification') == 1 && $request->filled('phone');
 		}
-		
+
+		// dd($phoneVerificationRequired);
 		// New Post
 		$post  = new Post();
 		$input = $request->only($post->getFillable());
@@ -295,7 +296,7 @@ class CreateController extends FrontController
 			}
 			
 		}
-		
+		// dd($nextStepUrl);
 		// Redirection
 		return redirect($nextStepUrl);
 	}

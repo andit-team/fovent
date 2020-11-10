@@ -104,9 +104,7 @@
             </div>
             <div class="card-footer">
                 {{-- @if($agent->user->stripeAcc) --}}
-                    <button class="btn btn-primary
-                        {{$account && $account->details_submitted ? '' : 'disabled pointNone'}}
-                    " id="submitForm">Click to Pay</button>
+                    <button class="btn btn-primary {{$account && $account->details_submitted ? '' : 'disabled pointNone'}}" id="submitForm">Click to Pay</button>
                 {{--@else 
                      <button class="btn btn-primary disabled" title="First add to payment card">Click to Pay</button> --}}
                 {{-- @endif --}}

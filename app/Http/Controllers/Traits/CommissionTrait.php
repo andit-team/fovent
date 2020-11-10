@@ -100,6 +100,7 @@ trait CommissionTrait
 				$commission->user_name.' | has posted as '.$package->name.' price as '.$package->price.' '.$package->currency_code
 				: 'Package Not Found';
 			$commission->save();
+
 		}
 	}
 }

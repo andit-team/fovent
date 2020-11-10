@@ -14,6 +14,7 @@
  */
 
 namespace App\Helpers;
+use Illuminate\Support\Facades\Http;
 
 class Ip
 {
@@ -194,17 +195,23 @@ class Ip
 		if(!$json){
 			return 'location not found';
 		}
-		if(array_key_exists('city_name',$json)){
-			$loc .= $json['city_name'].', ';
+		if(array_key_exists('city',$json)){
+			$loc .= $json['city'].', ';
 		}
-		if(array_key_exists('region_name',$json)){
-			$loc .= $json['region_name'].', ';
+		if(array_key_exists('regionName',$json)){
+			$loc .= $json['regionName'].', ';
 		}
-		if(array_key_exists('country_name',$json)){
-			$loc .= $json['country_name'];
+		if(array_key_exists('country',$json)){
+			$loc .= $json['country'];
 		}
-		
-		
 		return $loc;
+	}
+
+	public static function getIpInformation(){
+		// https://members.ip-api.com/#pricing
+		$ip =  Ip::get();
+		$ip =  $ip == '::1' ? '27.147.160.253' : $ip;
+		$response = Http::get("http://ip-api.com/json/".$ip);
+		return $response->body();
 	}
 }

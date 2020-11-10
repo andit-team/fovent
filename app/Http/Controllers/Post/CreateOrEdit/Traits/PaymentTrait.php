@@ -50,7 +50,6 @@ trait PaymentTrait
 			if (!empty($plugin)) {
 				// Send the Payment
 				try {
-
 					if($post->commission){
 						$this->commissionUpdate($post->commission,$package);
 					}

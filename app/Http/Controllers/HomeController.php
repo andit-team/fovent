@@ -55,7 +55,6 @@ class HomeController extends FrontController
 		if(isset($request->_ref)){
 			setcookie("_ref", $request->_ref, strtotime( '+30 days' )); //set cookies
 		}
-
 		// if(config('settings.geo_location.auto_detection')){
 		// 	$ip =  App\Helpers\Ip::get();
 		// 	$ip =  $ip == '::1' ? '27.147.160.253' : $ip;
