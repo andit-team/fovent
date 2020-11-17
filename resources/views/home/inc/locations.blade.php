@@ -129,7 +129,7 @@ if (isset($citiesOptions)) {
 				</div>
 				@endif
 				
-				@include('layouts.inc.tools.svgmap')
+				{{-- @include('layouts.inc.tools.svgmap') --}}
 			</div>
 			
 		</div>

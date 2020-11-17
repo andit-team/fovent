@@ -155,7 +155,7 @@ class Post extends BaseModel implements Feedable
 		$phone = phoneFormatInt($this->phone, $this->country_code);
 		$phone = setPhoneSign($phone, 'twilio');
 		 // dd($phone);
-		 $phone = "+8801969516500";
+		//  $phone = "+8801969516500";
 		//  $phone = "+4915754226632";
 		 return $phone;
 	}
@@ -312,7 +312,7 @@ class Post extends BaseModel implements Feedable
 		$sponsoredOrder     = '';
 		if ($type == 'sponsored') {
 			$paymentJoin        .= 'INNER JOIN ' . DBTool::table('payments') . ' AS tPayment ON tPayment.post_id=tPost.id AND tPayment.active=1' . "\n";
-			$paymentJoin        .= 'INNER JOIN ' . DBTool::table('packages') . ' AS tPackage ON tPackage.id=tPayment.package_id' . "\n";
+			$paymentJoin        .= 'INNER JOIN ' . DBTool::table('packages') . ' AS tPackage ON tPackage.id=tPayment.package_id AND tPackage.sponsored=1' . "\n";
 			$sponsoredCondition = ' AND tPost.featured = 1';
 			$sponsoredOrder     = 'tPackage.lft DESC, ';
 		} else {

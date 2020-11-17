@@ -101,6 +101,8 @@ class LoginController extends FrontController
 	 */
 	public function login(LoginRequest $request)
 	{
+		// dd($request->all());
+		// return redirect($this->loginPath)->withErrors(['error' => 'stop login...'])->withInput();
 		// If the class is using the ThrottlesLogins trait, we can automatically throttle
 		// the login attempts for this application. We'll key this by the username and
 		// the IP address of the client making these requests into this application.
@@ -112,7 +114,7 @@ class LoginController extends FrontController
 		
 		// Get the right login field
 		$loginField = getLoginField($request->input('login'));
-		
+		// dd($loginField);
 		// Get credentials values
 		$credentials = [
 			$loginField => $request->input('login'),
@@ -125,7 +127,18 @@ class LoginController extends FrontController
 			$credentials['verified_email'] = 1;
 			$credentials['verified_phone'] = 1;
 		}
+
+		$user_verify = \DB::table('users')->where($loginField,$request->login)->first();
+		if($user_verify){
+			if($user_verify->verified_email != 1){
+				return redirect($this->loginPath)->withErrors(['error' => 'Email Verification is required'])->withInput();
+			}
+			if($user_verify->verified_phone != 1){
+				return redirect($this->loginPath)->withErrors(['error' => 'Phone Verification is required'])->withInput();
+			}
+		}
 		
+		// dd($user);
 		// Auth the User
 		if (auth()->attempt($credentials)) {
 			$user = User::find(auth()->user()->getAuthIdentifier());
@@ -143,7 +156,6 @@ class LoginController extends FrontController
 			// Redirect normal users
 			return redirect()->intended($this->redirectTo);
 		}
-		
 		// If the login attempt was unsuccessful we will increment the number of attempts
 		// to login and redirect the user back to the login form. Of course, when this
 		// user surpasses their maximum number of attempts they will get locked out.

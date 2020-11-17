@@ -17,6 +17,7 @@ namespace App\Http\Controllers\Search;
 
 use App\Models\City;
 use Torann\LaravelMetaTags\Facades\MetaTag;
+use Illuminate\Http\Request;
 
 class CityController extends BaseController
 {
@@ -70,5 +71,15 @@ class CityController extends BaseController
 		view()->share('uriPathCityId', $cityId);
 		
 		return appView('search.serp', $data);
+	}
+
+	public function region(Request $request){
+		$city = City::where('asciiname',$request->r)->first();
+		dd($city);
+		if($city){
+			return redirect('/free-ads/'.$city->name.'/'.$city->id);
+		}
+		flash('Sorry! City Not Found')->error();
+		return redirect()->back();
 	}
 }

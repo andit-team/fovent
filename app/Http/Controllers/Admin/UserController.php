@@ -41,7 +41,7 @@ class UserController extends PanelController
 		|--------------------------------------------------------------------------
 		*/
 		$this->xPanel->setModel('App\Models\User');
-		// $this->xPanel->addClause('where', 'is_admin', 1);
+		$this->xPanel->addClause('where', 'is_admin', 1);
 		
 		// If the logged admin user has permissions to manage users and is has not 'super-admin' role,
 		// don't allow him to manage 'super-admin' role's users.

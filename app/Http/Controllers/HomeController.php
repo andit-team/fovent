@@ -240,7 +240,7 @@ class HomeController extends FrontController
 			];
 			$sponsored = ArrayHelper::toObject($sponsored);
 		}
-		
+		// dd('sdf');
 		view()->share('featured', $sponsored);
 		view()->share('featuredOptions', $value);
 	}

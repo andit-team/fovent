@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use App\Models\User;
 
 trait VerificationTrait
 {
@@ -54,6 +55,7 @@ trait VerificationTrait
 	 */
 	public function verification($field, $token = null)
 	{
+		// dd($field);
 		// Keep Success Message If exists
 		if (session()->has('message')) {
 			session()->keep(['message']);
@@ -93,18 +95,19 @@ trait VerificationTrait
 		$model = $entityRef['namespace'];
 		$entity = $model::withoutGlobalScopes($entityRef['scopes'])->where($field . '_token', $token)->first();
 		if (!empty($entity)) {
+
 			if ($entity->{'verified_' . $field} != 1) {
 				// Verified
 				$entity->{'verified_' . $field} = 1;
+				$entity->{$field.'_token'} = null;
 				$entity->save();
 
 				if ($entityRef['slug'] == 'post') {
-					\DB::table('users')->where('id',$entity->user_id)->update([
+					$y = \DB::table('users')->where('id',$entity->user_id)->update([
 						'verified_'.$field => 1,
 						$field.'_token' => NULL
 					]);
 				}
-
 				if ($entityRef['slug'] == 'user') {
 					\DB::table('posts')->where('user_id',$entity->id)->update([
 						'verified_'.$field => 1,

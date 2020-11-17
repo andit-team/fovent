@@ -131,7 +131,7 @@ if (isset($citiesOptions)) {
 				$('#countryMap').twism("create",
 				{
 					map: "custom",
-					customMap: '{{ config('larapen.core.maps.urlBase') . config('country.icode') . '.svg' }}',
+					customMap: 'public/{{ config('larapen.core.maps.urlBase') . config('country.icode') . '.svg' }}',
 					backgroundColor: '{{ $map['backgroundColor'] }}',
 					border: '{{ $map['border'] }}',
 					hoverBorder: '{{ $map['hoverBorder'] }}',
@@ -152,7 +152,7 @@ if (isset($citiesOptions)) {
 						@if (config('settings.seo.multi_countries_urls'))
 							searchPage = searchPage + '?d={{ config('country.code') }}&r=' + region;
 						@else
-							searchPage = searchPage + '?r=' + region;
+							searchPage = searchPage + '?d={{ config('country.code') }}&r=' + region;
 						@endif
 						redirect(searchPage);
 					},

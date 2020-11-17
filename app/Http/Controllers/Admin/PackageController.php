@@ -71,6 +71,14 @@ class PackageController extends PanelController
 			'function_name' => 'getActiveHtml',
 			'on_display'    => 'checkbox',
 		]);
+
+		$this->xPanel->addColumn([
+			'name'          => 'sponsored',
+			'label'         => 'Sponsored',
+			'type'          => 'model_function',
+			'function_name' => 'getSponsoredHtml',
+			'on_display'    => 'checkbox',
+		]);
 		
 		// FIELDS
 		$this->xPanel->addField([
@@ -171,6 +179,16 @@ class PackageController extends PanelController
 		$this->xPanel->addField([
 			'name'              => 'active',
 			'label'             => trans('admin.Active'),
+			'type'              => 'checkbox',
+			'hint'              => '<br><br>',
+			'wrapperAttributes' => [
+				'class' => 'form-group col-md-6',
+				'style' => 'margin-top: 20px;',
+			],
+		]);
+		$this->xPanel->addField([
+			'name'              => 'sponsored',
+			'label'             => 'Sponsored',
 			'type'              => 'checkbox',
 			'hint'              => '<br><br>',
 			'wrapperAttributes' => [

@@ -86,6 +86,7 @@ Route::group([
 		Route::get('dashboard', 'DashboardController@dashboard');
 		Route::get('/', 'DashboardController@redirect');
 		
+		
 		// Extra (must be called before CRUD)
 		Route::get('homepage/{action}', 'HomeSectionController@reset')->where('action', 'reset_(.*)');
 		Route::get('languages/sync_files', 'LanguageController@syncFilesLines');
@@ -473,25 +474,26 @@ Route::group([
 		Route::get(LaravelLocalization::transRoute('routes.search-subCat'), 'Search\CategoryController@index');
 		Route::get(LaravelLocalization::transRoute('routes.search-cat'), 'Search\CategoryController@index');
 	});
+	Route::get('search/', 'Search\CityController@region');
 });
 
 // use Twilio\Rest\Client;
 
 // Route::get('blabla/', function () {
-// 	//sms
-// 	require_once 'vendor/autoload.php';
+// // 	//sms
+// // 	require_once 'vendor/autoload.php';
 
 
 
-// // Find your Account Sid and Auth Token at twilio.com/console
-// // DANGER! This is insecure. See http://twil.io/secure
+// // // Find your Account Sid and Auth Token at twilio.com/console
+// // // DANGER! This is insecure. See http://twil.io/secure
 // $sid    = "ACa4926cfd41131893f382b741473f5383";
-// $token  = "43826c81ec79f68f21ab566de425b22a";
+// $token  = "86b8a4f9879dcf51003a7c8dcae47c1d";
 // $twilio = new Client($sid, $token);
 
 // $message = $twilio->messages
-//                   ->create("+8801969516500", // to
-//                            ["body" => "Hi there! It's a test message from fovent", "from" => "+12348135586"]
+//                   ->create("+8801558160761", // to
+//                            ["body" => "Hello Taz", "from" => "+12348135586"]
 //                   );
 
 // dd($message);

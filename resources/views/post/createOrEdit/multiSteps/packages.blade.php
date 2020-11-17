@@ -79,6 +79,7 @@
 																}
 															}
 														?>
+														{{-- {{dd($packages)}} --}}
                                                         @foreach ($packages as $package)
 															<?php
 															
@@ -105,6 +106,10 @@
 																		$badge = ' <span class="badge badge-success">' . t('Upgrade') . '</span>';
 																	}
 																}
+																if ($package->sponsored == 1) {
+																	$badge = ' <span class="badge badge-info">' . 'sponsored' . '</span>';
+																}
+
 																if ($currentPackageId == $package->tid) {
 																	$badge = ' <span class="badge badge-secondary">' . t('Current') . '</span>';
 																	if ($currentPaymentActive == 0) {
@@ -114,6 +119,9 @@
                                                             } else {
 																if ($package->price > 0) {
 																	$badge = ' <span class="badge badge-success">' . t('Upgrade') . '</span>';
+																}
+																if ($package->sponsored == 1) {
+																	$badge .= ' <span class="badge badge-primary">' . 'Sponsored' . '</span>';
 																}
 															}
                                                             ?>

@@ -73,7 +73,9 @@ class Package extends BaseModel
         'rgt',
         'depth',
         'translation_lang',
-        'translation_of'
+        'translation_of',
+        'translation_of',
+        'sponsored'
     ];
     public $translatable = ['name', 'short_name', 'description'];
     
@@ -105,6 +107,13 @@ class Package extends BaseModel
         static::addGlobalScope(new ActiveScope());
     }
     
+    public function getSponsoredHtml()
+    {
+        if (!isset($this->sponsored)) return false;
+        
+        return ajaxCheckboxDisplay($this->{$this->primaryKey}, $this->getTable(), 'sponsored', $this->sponsored);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS

@@ -159,7 +159,6 @@ class CreateController extends FrontController
 		$city = City::find($request->input('city_id', 0));
 		if (empty($city)) {
 			flash(t("posting_ads_is_disabled"))->error();
-			
 			return back()->withInput();
 		}
 		
